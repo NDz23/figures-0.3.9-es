@@ -54,7 +54,7 @@ class ReportsList extends Component {
               to={'/figures/report/' + report.reportId}
               className={styles['view-report-button']}
             >
-              Ver reporte
+              View report
             </Link>
           </div>
         </li>
@@ -69,13 +69,13 @@ class ReportsList extends Component {
         <ul className={cx({ 'container': true, 'reports-list': true})}>
           <li key='list-header' className={cx(styles['report'], styles['list-header'])}>
             <div className={styles['report-name']}>
-              Nombre del reporte:
+              Report name:
             </div>
             <div className={styles['report-description']}>
-              Descripci&oacute;n del reporte:
+              Report description:
             </div>
             <div className={styles['report-timestamp']}>
-              Hora de creaci&oacute;n:
+              Time created:
             </div>
             <div className={styles['report-buttons']}>
             </div>

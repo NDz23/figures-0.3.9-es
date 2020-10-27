@@ -74,36 +74,36 @@ class SingleCourseContent extends Component {
         </HeaderAreaLayout>
         <div className={cx({ 'container': true, 'course-quick-links': true})}>
           <span className={styles['course-quick-links__line']}></span>
-          <a href={"/courses/" + this.props.courseId} target="_blank" className={styles['course-quick-links__link']}>Mostrar este curso</a>
+          <a href={"/courses/" + this.props.courseId} target="_blank" className={styles['course-quick-links__link']}>Open this course in LMS</a>
         </div>
         <div className={cx({ 'container': true, 'base-grid-layout': true, 'dashboard-content': true})}>
           <BaseStatCard
-            cardTitle='Usuarios activos'
+            cardTitle='Active users'
             fetchDataKey={'active_users'}
             fetchValueFunction={(dataKey) => courseMonthlyMetrics.getSpecificWithHistory(this.props.courseId, dataKey)}
             fetchHistoryFunction={(dataKey) => courseMonthlyMetrics.getSpecificWithHistory(this.props.courseId, dataKey)}
           />
           <BaseStatCard
-            cardTitle='Cantidad de estudiantes enrolados'
+            cardTitle='Number of enrolled learners'
             fetchDataKey={'course_enrollments'}
             fetchValueFunction={(dataKey) => courseMonthlyMetrics.getSpecificWithHistory(this.props.courseId, dataKey)}
             fetchHistoryFunction={(dataKey) => courseMonthlyMetrics.getSpecificWithHistory(this.props.courseId, dataKey)}
           />
           <BaseStatCard
-            cardTitle='Progreso promedio de curso'
+            cardTitle='Average course progress'
             fetchDataKey={'avg_progress'}
             fetchValueFunction={(dataKey) => courseMonthlyMetrics.getSpecificWithHistory(this.props.courseId, dataKey)}
             fetchHistoryFunction={(dataKey) => courseMonthlyMetrics.getSpecificWithHistory(this.props.courseId, dataKey)}
             dataType='percentage'
           />
           <BaseStatCard
-            cardTitle='D&iacute;as promedio para completar'
+            cardTitle='Average days to complete'
             fetchDataKey={'avg_days_to_complete'}
             fetchValueFunction={(dataKey) => courseMonthlyMetrics.getSpecificWithHistory(this.props.courseId, dataKey)}
             fetchHistoryFunction={(dataKey) => courseMonthlyMetrics.getSpecificWithHistory(this.props.courseId, dataKey)}
           />
           <BaseStatCard
-            cardTitle='Cantidad que han completado'
+            cardTitle='User course completions'
             fetchDataKey={'num_learners_completed'}
             fetchValueFunction={(dataKey) => courseMonthlyMetrics.getSpecificWithHistory(this.props.courseId, dataKey)}
             fetchHistoryFunction={(dataKey) => courseMonthlyMetrics.getSpecificWithHistory(this.props.courseId, dataKey)}

@@ -28,7 +28,6 @@ import figures.metrics
 from figures.models import CourseDailyMetrics, PipelineError
 from figures.pipeline.logger import log_error
 import figures.pipeline.loaders
-from figures.pipeline.enrollment_metrics import bulk_calculate_course_progress_data
 from figures.serializers import CourseIndexSerializer
 from figures.compat import GeneratedCertificate
 import figures.sites
@@ -82,7 +81,7 @@ def get_active_learner_ids_today(course_id, date_for):
         ).values_list('student__id', flat=True).distinct()
 
 
-def get_average_progress_deprecated(course_id, date_for, course_enrollments):
+def get_average_progress(course_id, date_for, course_enrollments):
     """Collects and aggregates raw course grades data
     """
     progress = []
@@ -185,14 +184,6 @@ def get_average_days_to_complete(course_id, date_for):
 
 
 def get_num_learners_completed(course_id, date_for):
-    """
-    Get the total number of certificates generated for the course up to the
-    'date_for' date
-
-    We will need to relabel this to "certificates"
-
-    We may want to get the number of certificates granted in the given day
-    """
     certificates = GeneratedCertificate.objects.filter(
         course_id=as_course_key(course_id),
         created_date__lt=as_datetime(next_day(date_for)))
@@ -234,9 +225,6 @@ class CourseDailyMetricsExtractor(object):
                 average_days_to_complete=data.get('average_days_to_complete, None'),
                 num_learners_completed=data['num_learners_completed'],
             )
-        TODO: refactor this class
-        Add lazy loading method to load course enrollments
-        - Create a method for each metric field
         """
 
         # Update args if not assigned
@@ -259,23 +247,18 @@ class CourseDailyMetricsExtractor(object):
         # we can do a lambda for course_enrollments to get the count
 
         data['enrollment_count'] = course_enrollments.count()
-
         active_learner_ids_today = get_active_learner_ids_today(
             course_id, date_for,)
         if active_learner_ids_today:
             active_learners_today = active_learner_ids_today.count()
         else:
             active_learners_today = 0
+
         data['active_learners_today'] = active_learners_today
-
-        # Average progress
-        progress_data = bulk_calculate_course_progress_data(course_id=course_id,
-                                                            date_for=date_for)
-        data['average_progress'] = progress_data['average_progress']
-
+        data['average_progress'] = get_average_progress(
+            course_id, date_for, course_enrollments,)
         data['average_days_to_complete'] = get_average_days_to_complete(
             course_id, date_for,)
-
         data['num_learners_completed'] = get_num_learners_completed(
             course_id, date_for,)
 

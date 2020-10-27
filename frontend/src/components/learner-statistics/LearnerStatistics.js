@@ -20,76 +20,71 @@ class LearnerStatistics extends Component {
       countryStats: List([
         {
           value: "n-a",
-          label: "No disponible",
+          label: "Not available",
           count: 0
         }
       ]),
       genderStats: List([
         {
           value: "m",
-          label: "Masculino",
+          label: "Male",
           count: 0
         },
         {
           value: "f",
-          label: "Femenino",
+          label: "Female",
           count: 0
         },
         {
           value: "o",
-          label: "Otro / Prefiere no decir",
+          label: "Other / Prefer not to say",
           count: 0
         }
       ]),
       educationLevelStats: List([
         {
           value: "p",
-          label: "Doctorado",
+          label: "PhD or Doctorate",
           count: 0
         },
         {
           value: "m",
-          label: "Master o mag&iacute;ster",
+          label: "Master's or professional degree",
           count: 0
         },
         {
           value: "b",
-          label: "Pregrado o Licenciatura",
+          label: "Bachelor's degree",
           count: 0
         },
         {
           value: "a",
-          label: "T&eacute;cnico-profesional",
+          label: "Associate's degree",
           count: 0
         },
         {
           value: "hs",
-          label: "Enseñanza secundaria",
+          label: "Secondary/high school",
           count: 0
         },
         {
           value: "jhs",
-          label: "Formación media",
+          label: "Junior secondary/junior high/middle school",
           count: 0
         },
         {
           value: "none",
-          label: "Ninguna",
+          label: "None",
           count: 0
         },
         {
           value: "o",
-          label: "Otra",
+          label: "Other",
           count: 0
         },
         {
           value: "n-a",
-          label: "No disponible",
-          count: 0
-        },
-        {
-          value: "el",
-          label: "Enseñanza primaria",
+          label: "Not available",
           count: 0
         }
       ])
@@ -116,9 +111,9 @@ class LearnerStatistics extends Component {
       const learnerCountryTemp = learner.getIn(['country']) ? learner.getIn(['country']) : 'n-a';
       let foundIndex = countryStats.findIndex(item => (item.value === learnerCountryTemp));
       if (foundIndex !== -1) {
-        countryStats = countryStats.set(foundIndex, { value: learnerCountryTemp, label: (learnerCountryTemp !== 'n-a') ? countries.getName(learnerCountryTemp, "en") : "No disponible", count: countryStats.get(foundIndex).count + 1 });
+        countryStats = countryStats.set(foundIndex, { value: learnerCountryTemp, label: (learnerCountryTemp !== 'n-a') ? countries.getName(learnerCountryTemp, "en") : "Not available", count: countryStats.get(foundIndex).count + 1 });
       } else {
-        countryStats = countryStats.push({ value: learnerCountryTemp, label: (learnerCountryTemp !== 'n-a') ? countries.getName(learnerCountryTemp, "en") : "No disponible", count: 1 })
+        countryStats = countryStats.push({ value: learnerCountryTemp, label: (learnerCountryTemp !== 'n-a') ? countries.getName(learnerCountryTemp, "en") : "Not available", count: 1 })
       }
       //gender
       const genderTemp = learner.getIn(['gender']) ? learner.getIn(['gender']) : 'n-a';
@@ -162,9 +157,9 @@ class LearnerStatistics extends Component {
 
   render() {
     const dropdownOptions = List([
-      { value: 'education', label: 'Por nivel educativo' },
-      { value: 'gender', label: 'Por g&eacute;nero' },
-      { value: 'country', label: 'Por pa&iacute;s' },
+      { value: 'education', label: 'By education level' },
+      { value: 'gender', label: 'By gender' },
+      { value: 'country', label: 'By country' },
     ])
 
     return (
@@ -174,7 +169,7 @@ class LearnerStatistics extends Component {
             {this.props.listTitle}
           </div>
           <div className={styles['dropdown-container']}>
-            <span>Tipo de desglose de los alumnos del curso:</span>
+            <span>Course learners breakdown type:</span>
             <Select
               options={dropdownOptions.toArray()}
               onChange = {this.onChangeBreakdownType}
@@ -195,7 +190,7 @@ class LearnerStatistics extends Component {
 }
 
 LearnerStatistics.defaultProps = {
-  listTitle: 'Estad&iacute;sticas de estudiantes:',
+  listTitle: 'Learner statistics:',
   breakdownType: 'country',
 }
 

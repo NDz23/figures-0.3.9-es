@@ -132,8 +132,8 @@ class AutoCompleteCourseSelect extends Component {
 
 AutoCompleteCourseSelect.defaultProps = {
   negativeStyleButton: false,
-  buttonText: 'Elija un curso',
-  inputPlaceholder: 'Empiece a escribir para buscar...',
+  buttonText: 'Select a course',
+  inputPlaceholder: 'Start typing to search...',
   coursesList: [
     {
       courseId: 'A101',

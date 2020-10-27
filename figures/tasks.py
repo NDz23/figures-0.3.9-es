@@ -16,7 +16,6 @@ from openedx.core.djangoapps.content.course_overviews.models import CourseOvervi
 from student.models import CourseEnrollment  # pylint: disable=import-error
 
 from figures.helpers import as_course_key, as_date
-from figures.log import log_exec_time
 from figures.models import PipelineError
 from figures.pipeline.course_daily_metrics import CourseDailyMetricsLoader
 from figures.pipeline.site_daily_metrics import SiteDailyMetricsLoader
@@ -102,8 +101,7 @@ def populate_daily_metrics(date_for=None, force_update=False):
     logger.info('Starting task "figures.populate_daily_metrics" for date "{}"'.format(
         date_for))
 
-    sites_count = Site.objects.count()
-    for i, site in enumerate(Site.objects.all()):
+    for site in Site.objects.all():
         for course in figures.sites.get_courses_for_site(site):
             try:
                 populate_single_cdm(
@@ -133,8 +131,6 @@ def populate_daily_metrics(date_for=None, force_update=False):
             site_id=site.id,
             date_for=date_for,
             force_update=force_update)
-        logger.info("figures.populate_daily_metrics: finished Site {:04d} of {:04d}".format(
-            i, sites_count))
 
     logger.info('Finished task "figures.populate_daily_metrics" for date "{}"'.format(
         date_for))
@@ -233,8 +229,6 @@ def populate_mau_metrics_for_site(site_id, month_for=None, force_update=False):
     TODO: Check results of 'store_mau_metrics' to log unexpected results
     """
     site = Site.objects.get(id=site_id)
-    msg = 'Starting figures'
-    logger.info(msg)
     for course_key in figures.sites.get_course_keys_for_site(site):
         populate_course_mau(site_id=site_id,
                             course_id=str(course_key),
@@ -256,11 +250,8 @@ def populate_all_mau():
 
 @shared_task
 def populate_monthly_metrics_for_site(site_id):
-
     site = Site.objects.get(id=site_id)
-    msg = 'Ran populate_monthly_metrics_for_site. [{}]:{}'
-    with log_exec_time(msg.format(site.id, site.domain)):
-        fill_last_smm_month(site=site)
+    fill_last_smm_month(site=site)
 
 
 @shared_task

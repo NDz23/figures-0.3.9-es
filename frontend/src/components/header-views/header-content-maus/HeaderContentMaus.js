@@ -20,7 +20,7 @@ class CustomTooltip extends Component {
       return (
         <div className={styles['bar-tooltip']}>
           <span className={styles['tooltip-value']}>{payload[0].value}</span>
-          <p>usuarios activos en {payload[0].payload.period}</p>
+          <p>active users in {payload[0].payload.period}</p>
         </div>
       );
     }
@@ -48,16 +48,16 @@ class HeaderContentMaus extends Component {
         <div className={cx({ 'main-content': true, 'container': true})}>
           <div className={styles['users-count']}>
             <span className={styles['number']}>{currentPeriodValue}</span>
-            <span className={styles['text']}>usuarios activos (UAMs) este mes</span>
+            <span className={styles['text']}>active users (MAUs) this month</span>
           </div>
           <span className={styles['text-separator']} />
           <div className={styles['comparison-box']}>
             <span className={styles['comparison-box__icon']}>{comparisonIcon}</span>
             <span className={styles['comparison-box__text']}>
-              {(currentPeriodValue >= previousPeriodValue) ? 'up' : 'down'} {comparisonValue} comparado con el mes pasado
+              {(currentPeriodValue >= previousPeriodValue) ? 'up' : 'down'} {comparisonValue} compared to last month
             </span>
             {this.props.showHistoryButton ? (
-              <Link to='/figures/mau-history' className={styles['mau-history-link']}>Ver detalles</Link>
+              <Link to='/figures/mau-history' className={styles['mau-history-link']}>See details</Link>
             ) : ''}
           </div>
         </div>
@@ -76,7 +76,7 @@ class HeaderContentMaus extends Component {
                 />
               </AreaChart>
             ) : (
-              <span className={styles['no-data-label']}>Informaci&oacute; hist&oacute;rica de usuarios actuvos no disponible</span>
+              <span className={styles['no-data-label']}>Active Users historic data unavailable</span>
             )}
           </ResponsiveContainer>
         </div>

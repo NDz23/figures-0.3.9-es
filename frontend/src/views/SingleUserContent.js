@@ -13,22 +13,21 @@ var countries = require("i18n-iso-countries");
 countries.registerLocale(require("i18n-iso-countries/langs/en.json"));
 
 const educationLevelsDict = {
-  "p": "Doctorado",
-  "m": "Master o mag&iacute;ster",
-  "b": "Pregrado o licenciatura",
-  "a": "T&eacute;cnico-profesional",
-  "hs": "Enseñanza secundaria",
-  "jhs": "Formaci&oacute;n media",
-  "none": "Ninguna educaci&oacute;n formal",
-  "o": "Otra educaci&oacute;n",
-  "n-a": "No disponible",
-  "el": "Enseñanza primaria"
+  "p": "PhD or Doctorate",
+  "m": "Master's or professional degree",
+  "b": "Bachelor's degree",
+  "a": "Associate's degree",
+  "hs": "Secondary/high school",
+  "jhs": "Junior secondary/junior high/middle school",
+  "none": "None",
+  "o": "Other",
+  "n-a": "Not available"
 }
 
 const genderDict = {
-  "m": "Masculino",
-  "f": "Femenino",
-  "o": "Otro / Prefiere no decir"
+  "m": "Male",
+  "f": "Female",
+  "o": "Other / Prefer not to say"
 }
 
 let cx = classNames.bind(styles);
@@ -76,39 +75,39 @@ class SingleUserContent extends Component {
             </div>
             <ul className={styles['user-details']}>
               <li>
-                <span className={styles['label']}>Usuario:</span>
+                <span className={styles['label']}>Username:</span>
                 <span className={styles['value']}>{this.state.userData.getIn(['username'])}</span>
               </li>
               <li>
-                <span className={styles['label']}>Año de nacimiento:</span>
+                <span className={styles['label']}>Year of birth:</span>
                 <span className={styles['value']}>{this.state.userData.getIn(['year_of_birth'])}</span>
               </li>
               <li>
-                <span className={styles['label']}>Género:</span>
+                <span className={styles['label']}>Gender:</span>
                 <span className={styles['value']}>{genderDict[this.state.userData.getIn(['gender'])]}</span>
               </li>
               <li>
-                <span className={styles['label']}>Registro:</span>
+                <span className={styles['label']}>Date joined:</span>
                 <span className={styles['value']}>{dateJoined.toUTCString()}</span>
               </li>
               <li>
-                <span className={styles['label']}>Activado:</span>
-                <span className={styles['value']}>{this.state.userData.getIn(['is_active'], false) ? 'Cuenta activa' : 'Cuenta no activa'}</span>
+                <span className={styles['label']}>Account activated:</span>
+                <span className={styles['value']}>{this.state.userData.getIn(['is_active'], false) ? 'Account activated' : 'Not activated'}</span>
               </li>
               <li>
-                <span className={styles['label']}>Cursos enrolados:</span>
+                <span className={styles['label']}>Courses enrolled:</span>
                 <span className={styles['value']}>{this.state.userData.getIn(['courses']) ? this.state.userData.getIn(['courses']).length : ""}</span>
               </li>
               <li>
-                <span className={styles['label']}>Pa&iacute;s:</span>
+                <span className={styles['label']}>Country:</span>
                 <span className={styles['value']}>{this.state.userData.getIn(['country']) ? countries.getName(this.state.userData.getIn(['country']), "en") : "Not Available"}</span>
               </li>
               <li>
-                <span className={styles['label']}>Nivel de educaci&oacute;n:</span>
+                <span className={styles['label']}>Level of education:</span>
                 <span className={styles['value']}>{this.state.userData.getIn(['level_of_education']) ? educationLevelsDict[this.state.userData.getIn(['level_of_education'])] : 'Not Available'}</span>
               </li>
               <li>
-                <span className={styles['label']}>Correo:</span>
+                <span className={styles['label']}>Email address:</span>
                 <span className={styles['value']}><a href={"mailto:" + this.state.userData.getIn(['email'])}>{this.state.userData.getIn(['email'])}</a></span>
               </li>
             </ul>

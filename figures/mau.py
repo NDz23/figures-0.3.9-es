@@ -2,10 +2,7 @@
 This module provides MAU metrics retrieval functionality
 """
 
-from datetime import datetime, timedelta
-from django.utils.timezone import utc
-
-from figures.compat import RELEASE_LINE
+from datetime import datetime
 
 from figures.models import CourseMauMetrics, SiteMauMetrics
 from figures.sites import (
@@ -74,67 +71,6 @@ def retrieve_live_course_mau_data(site, course_id):
         course_id=str(course_id),
         domain=site.domain,
     )
-
-
-def mau_1g_for_month_as_of_day(sm_queryset, date_for):
-    """Get the MAU from the sm, as of the "date_for" for "date_for" month
-
-    sm_queryset is the StudentModule queryset for our source
-
-    This is a MAU 1G function that calculates the monthly active users as of the
-    day in the given month.
-
-    This function queries `courseware.models.StudentModule` to identify users
-    who are active in the site
-
-    Retrieves records based on date of the `StudentModule.modified` field
-    Returns a queryset of distinct user ids
-    """
-
-    # TODO: Remove this `if` branch after dropping Ginkgo support.
-    if RELEASE_LINE == 'ginkgo':
-        # Django 1.8 appears not to support 'lte' on the 'day' of a datetime
-        # Therefore we have to get records within a range
-        start_date = datetime(year=date_for.year,
-                              month=date_for.month,
-                              day=1).replace(tzinfo=utc)
-        # We do this in case 'date_for' is at the end of the month and get
-        # the 'day_after' as midnight of the next day so we can use '__lt'. If
-        # we simply used '__lte', then we exclude any events that happened on
-        # the 'date_for' in hours after the 'date_for' hours.
-
-        # temporary var as we don't know
-        day_after_temp = date_for + timedelta(days=1)
-        day_after = datetime(year=day_after_temp.year,
-                             month=day_after_temp.month,
-                             day=day_after_temp.day).replace(tzinfo=utc)
-
-        # We don't use 'dict(modified__range=[start_date, date_for])' because
-        # doing "__lt" for 0:00 hour tne next day means we don't have to worry
-        # about fractions of a second on the last second of the last day
-        filter_args = dict(modified__gte=start_date, modified__lt=day_after)
-    else:
-        filter_args = dict(modified__year=date_for.year,
-                           modified__month=date_for.month,
-                           modified__day__lte=date_for.day)
-
-    month_sm = sm_queryset.filter(**filter_args)
-    return month_sm.values('student__id').distinct()
-
-
-def site_mau_1g_for_month_as_of_day(site, date_for):
-    """Get the MAU for the given site, as of the "date_for" in the month
-
-    This is a conenvience function. It gets the student modules for the site,
-    then calls
-
-        `figures.mau.mau_for_month_as_of_day(...)`
-
-    Returns a queryset with distinct user ids
-    """
-    site_sm = get_student_modules_for_site(site)
-    return mau_1g_for_month_as_of_day(sm_queryset=site_sm,
-                                      date_for=date_for)
 
 
 def store_mau_metrics(site, overwrite=False):

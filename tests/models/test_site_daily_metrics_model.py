@@ -40,8 +40,7 @@ class TestSiteDailyMetrics(object):
                 cumulative_active_user_count=11,
                 total_user_count=1,
                 course_count=1,
-                total_enrollment_count=1,
-                mau=1,
+                total_enrollment_count=1
             ),
         )
         site_metrics, created = SiteDailyMetrics.objects.get_or_create(**rec)
@@ -59,8 +58,7 @@ class TestSiteDailyMetrics(object):
             cumulative_active_user_count=11,
             total_user_count=1,
             course_count=1,
-            total_enrollment_count=1,
-            mau=1,
+            total_enrollment_count=1
         )
         obj = SiteDailyMetrics.objects.create(**rec)
         assert obj.site == default_site

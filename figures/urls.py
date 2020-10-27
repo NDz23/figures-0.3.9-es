@@ -101,20 +101,6 @@ router.register(
     base_name='user-index')
 
 
-# New endpoints in development (unstable)
-# Unstable here means the code is subject to change without notice
-
-router.register(
-    r'enrollment-metrics',
-    views.EnrollmentMetricsViewSet,
-    base_name='enrollment-metrics')
-
-router.register(
-    r'learner-metrics',
-    views.LearnerMetricsViewSet,
-    base_name='learner-metrics')
-
-
 urlpatterns = [
 
     # UI Templates

@@ -56,7 +56,7 @@ class HeaderReport extends Component {
               to='/figures/reports'
               className={styles['back-link']}
             >
-              Volver a lista de reportes
+              Back to reports list
             </Link>
             <ContentEditable
               className={styles['report-title']}
@@ -69,7 +69,7 @@ class HeaderReport extends Component {
           <div className={styles['content-bottom']}>
             <span className={styles['title-underline']}></span>
             <div className={styles['controls-container']}>
-              <button key="save-button" className={styles['button-main']}>Guardar reporte</button>
+              <button key="save-button" className={styles['button-main']}>Save report</button>
               {this.state.controlsExpanded && [
                 <span key="separator-1" className={styles['controls-separator']}></span>,
                 <button key="duplicate-button" className={styles['button-secondary']}>

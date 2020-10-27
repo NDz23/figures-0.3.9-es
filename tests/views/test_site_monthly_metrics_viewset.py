@@ -105,10 +105,7 @@ class TestSiteMonthlyMetricsViewSet(BaseViewTest):
         return True
 
     def run_request(self, endpoint, user_reg_test_data):
-        """
-        Stub
-        """
-        pass
+        import pdb; pdb.set_trace()
 
     @pytest.mark.skip(reason='We need to confirm who is in total registered users')
     def test_registered_learners(self, monkeypatch, user_reg_test_data):

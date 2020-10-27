@@ -9,24 +9,12 @@ from __future__ import absolute_import, unicode_literals
 import os
 import sys
 
-import environ
-
 from figures.settings.lms_production import (
     update_webpack_loader,
     update_celerybeat_schedule,
 )
 
 OPENEDX_RELEASE = os.environ.get('OPENEDX_RELEASE', 'HAWTHORN').upper()
-
-
-env = environ.Env(
-    FIGURES_IS_MULTISITE=(bool, False),
-    SEED_DAYS_BACK=(int, 60),
-    SEED_NUM_LEARNERS_PER_COURSE=(int, 25)
-)
-
-environ.Env.read_env()
-
 
 if OPENEDX_RELEASE == 'GINKGO':
     MOCKS_DIR = 'mocks/ginkgo'
@@ -47,9 +35,6 @@ ALLOWED_HOSTS = []
 
 # Set the default Site (django.contrib.sites.models.Site)
 SITE_ID = 1
-
-# TODO: Update this to allow environment variable override
-ENABLE_DEVSITE_CELERY = True
 
 # Adds the mock edx-platform modules to the Python module search path
 sys.path.append(os.path.normpath(os.path.join(PROJECT_ROOT_DIR, MOCKS_DIR)))
@@ -82,9 +67,6 @@ INSTALLED_APPS = [
     'openedx.core.djangoapps.course_groups',
     'student',
 ]
-
-if ENABLE_DEVSITE_CELERY:
-    INSTALLED_APPS.append('djcelery')
 
 # certificates app
 
@@ -180,24 +162,6 @@ REST_FRAMEWORK = {
 }
 
 
-if ENABLE_DEVSITE_CELERY:
-    # TODO: update to allow environemnt variable overrides
-    # the password seting is only for local development environments
-    FIGURES_CELERY_USER = 'figures_user'
-    FIGURES_CELERY_PASSWORD = 'figures_pwd'
-    FIGURES_CELERY_VHOST = 'figures_vhost'
-
-    BROKER_URL = 'amqp://{user}:{password}@localhost:5672/{vhost}'.format(
-        user=FIGURES_CELERY_USER,
-        password=FIGURES_CELERY_PASSWORD,
-        vhost=FIGURES_CELERY_VHOST,
-    )
-
-    CELERY_RESULT_BACKEND = 'djcelery.backends.cache:CacheBackend'
-
-    import djcelery
-    djcelery.setup_loader()
-
 #
 # Declare empty dicts for settings required by Figures
 #
@@ -211,10 +175,9 @@ WEBPACK_LOADER = {}
 # Included here for completeness in having this settings file match behavior in
 # the LMS settings
 CELERYBEAT_SCHEDULE = {}
-FEATURES = {
-    'FIGURES_IS_MULTISITE': env('FIGURES_IS_MULTISITE')
-}
+FEATURES = {}
 
+FEATURES = {}
 
 # The LMS defines ``ENV_TOKENS`` to load settings declared in `lms.env.json`
 # We have an empty dict here to replicate behavior in the LMS
@@ -227,8 +190,3 @@ update_celerybeat_schedule(CELERYBEAT_SCHEDULE, ENV_TOKENS)
 INTERNAL_IPS = [
     '127.0.0.1'
 ]
-
-DEVSITE_SEED = {
-    'DAYS_BACK': env('SEED_DAYS_BACK'),
-    'NUM_LEARNERS_PER_COURSE': env('SEED_NUM_LEARNERS_PER_COURSE')
-}

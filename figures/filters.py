@@ -9,15 +9,10 @@ Some work has been done to support Django Filter prior to 1.0 but it is not comp
 See the following for breaking changes when upgrading to Django Filter 1.0:
 
 https://django-filter.readthedocs.io/en/master/guide/migration.html#migrating-to-1-0
-
-TODO: Rename classes so they eiher all end with "Filter" or "FilterSet" then
-      update the test class names in "tests/test_filters.py" to match.
 """
 
 from django.contrib.auth import get_user_model
 from django.contrib.sites.models import Site
-from django.db.models import F
-
 import django_filters
 
 from opaque_keys.edx.keys import CourseKey
@@ -31,122 +26,21 @@ from figures.models import (
     CourseDailyMetrics,
     SiteDailyMetrics,
     CourseMauMetrics,
-    LearnerCourseGradeMetrics,
     SiteMauMetrics,
 )
 
 
-def hack_get_version(version_string):
-    """Get the parsed version string as a list of ints [major, minor, point]
-
-    This works with packages that use only numbers in the format of
-    "major.minor.point"
-
-    This is hopefully a temporary hack. We cannot expect the Open edX deployment
-    to have `packaging` installed, so the original implementation here which
-    used `packaging.versions` to check the version is not supported without
-    requiring the extra step of installing `packaging`
-    """
-    return [int(val) for val in version_string.split('.')]
-
-
-DJANGO_FILTERS_VERSION = hack_get_version(django_filters.__version__)
-
-
-def char_filter(field_name, lookup_expr):
-    """For backwards compatibility.
-
-    We require both `field_name` and `lookup_expr` to minimize the work this
-    function needs to do by not needing to conditionally check for the
-    `field_name` parameter.
-
-    Adapted from this PR:
-    https://github.com/appsembler/figures/pull/264/files#diff-ccfc20c64a04dae3fe94285d727a3aa2R79
-
-    And we'll need to replace the code in PR 264 with this function
-    """
-    if DJANGO_FILTERS_VERSION[0] < 1:
-        return django_filters.CharFilter(name=field_name, lookup_type=lookup_expr)
-    elif DJANGO_FILTERS_VERSION[0] < 2:
-        return django_filters.CharFilter(name=field_name, lookup_expr=lookup_expr)
-    else:
-        return django_filters.CharFilter(field_name=field_name, lookup_expr=lookup_expr)
-
-
 def char_method_filter(method):
-    """This function exists to address breaking changes in Django Filter
-
-    Parameters:
-        "method" is the method name string.
-
-    First check for old style (pre  version 1 Django Filter) to see if the
-    `MethodFilter` class exists.
-
-    IIf so, use that, else use `CharFilter`
-
-    First, check if Django Filter is pre 1.0. If so then use our custom method
-    filter class shim, 'CompatMethodFilter'
-    Otherwise, use version 1.0+ `CharFilter` class
-
-    TODO: Check that the versions stated are accurate. Meaning that the breaking
-    changes are at the major version for the differences we observer from 0.11.0
-    to 1.0.4 to 2.2.0 of Django Filter.
-
-    Pre Django Filter 1.0 uses the class, `MethodFilter`. Afterward, it uses the
-    class `CharFilter` with custom method handling.
-
-    With Django Filter 1.0, a new parameter, `name` was introduced and required
-    as a parameter in the custom filter methods.
-
-    Therefore, as a quick fix, we copied and modified the `MethodFilter` class
-    from Django Filter 0.11.0 and added it above in this module.
-
-    Before 1.0, the custom method signature is:
-
-    `(self, queryset, value)`
-
-    With 1.0, the method signature is:
-
-    `(self, queryset, name, value)`
-
-    Version 1.x replaces `MethodFilter` class with `FilterMethod`
-    Version 2.x changes the `name` parameter to `field_name`
     """
-    if DJANGO_FILTERS_VERSION[0] < 1:
-        class CompatMethodFilter(django_filters.MethodFilter):  # pylint: disable=no-member
-            def filter(self, qs, value):
-                '''
-                This filter method will act as a proxy for the actual method we want to
-                call.
+    method is the method name string
+    Check if old style first
 
-                It will try to find the method on the parent filterset,
-                if not it attempts to search for the method `field_{{attribute_name}}`.
-                Otherwise it defaults to just returning the queryset.
-                '''
-                parent = getattr(self, 'parent', None)
-                parent_filter_method = getattr(parent, self.parent_action, None)
-                if not parent_filter_method:
-                    func_str = 'filter_{0}'.format(self.name)
-                    parent_filter_method = getattr(parent, func_str, None)
-
-                if parent_filter_method is not None:
-                    return parent_filter_method(qs, self.name, value)
-                return qs
-
-        return CompatMethodFilter(action=method)
-    else:
-        return django_filters.CharFilter(method=method)
-
-
-def boolean_method_filter(method):
-    """
-    "method" is the method name string
-    First check for old style (pre version 1 Django Filters)
+    Pre v1:
     """
     if hasattr(django_filters, 'MethodFilter'):
         return django_filters.MethodFilter(action=method)  # pylint: disable=no-member
     else:
-        return django_filters.BooleanFilter(method=method)
+        return django_filters.CharFilter(method=method)
 
 
 class CourseOverviewFilter(django_filters.FilterSet):
@@ -168,14 +62,13 @@ class CourseOverviewFilter(django_filters.FilterSet):
 
     '''
 
-    display_name = char_filter(field_name='display_name',
-                               lookup_expr='icontains')
-    org = char_filter(field_name='display_org_with_default',
-                      lookup_expr='iexact')
-    number = char_filter(field_name='display_number_with_default',
-                         lookup_expr='iexact')
-    number_contains = char_filter(field_name='display_number_with_default',
-                                  lookup_expr='icontains')
+    display_name = django_filters.CharFilter(lookup_expr='icontains')
+    org = django_filters.CharFilter(
+        name='display_org_with_default', lookup_expr='iexact')
+    number = django_filters.CharFilter(
+        name='display_number_with_default', lookup_expr='iexact')
+    number_contains = django_filters.CharFilter(
+        name='display_number_with_default', lookup_expr='icontains')
 
     class Meta:
         model = CourseOverview
@@ -208,76 +101,6 @@ class CourseEnrollmentFilter(django_filters.FilterSet):
         fields = ['course_id', 'user_id', 'is_active', ]
 
 
-class EnrollmentMetricsFilter(CourseEnrollmentFilter):
-    """Filter query params for enrollment metrics
-
-    Consider making 'user_ids' and 'course_ids' be mixins for `user` foreign key
-    and 'course_id' respectively. Perhaps a class decorator if there's some
-    unforseen issue with doing a mixin for each
-
-    Filters
-
-    "course_ids" filters on a set of comma delimited course id strings
-    "user_ids" filters on a set of comma delimited integer user ids
-    "only_completed" shows only completed records. Django Filter 1.0.4 appears
-    to only support capitalized "True" as the value in the query string
-
-    The "only_completed" filter is subject to change. We want to be able to
-    filter on: "hide completed", "show only completed", "show everything"
-    So we may go with a "choice field"
-
-    Use ``date_for`` for retrieving a specific date
-    Use ``date_0`` and ``date_1`` for retrieving values in a date range, inclusive
-    each of these can be used singly to get:
-    * ``date_0`` to get records greater than or equal
-    * ``date_1`` to get records less than or equal
-
-    TODO: Add 'is_active' filter - need to find matches in CourseEnrollment
-    """
-    course_ids = char_method_filter(method='filter_course_ids')
-    user_ids = char_method_filter(method='filter_user_ids')
-    date = django_filters.DateFromToRangeFilter(name='date_for')
-    only_completed = boolean_method_filter(method='filter_only_completed')
-    exclude_completed = boolean_method_filter(method='filter_exclude_completed')
-
-    class Meta:
-        """
-        Allow all field and related filtering except for "site"
-        """
-        model = LearnerCourseGradeMetrics
-        exclude = ['site']
-
-    def filter_course_ids(self, queryset, name, value):  # pylint: disable=unused-argument
-        course_ids = [cid.replace(' ', '+') for cid in value.split(',')]
-        return queryset.filter(course_id__in=course_ids)
-
-    def filter_user_ids(self, queryset, name, value):  # pylint: disable=unused-argument
-        """
-        """
-        user_ids = [user_id for user_id in value.split(',') if user_id.isdigit()]
-        return queryset.filter(user_id__in=user_ids)
-
-    def filter_only_completed(self, queryset, name, value):  # pylint: disable=unused-argument
-        """
-        The "value" parameter is either `True` or `False`
-        """
-        if value is True:
-            return queryset.filter(sections_possible__gt=0,
-                                   sections_worked=F('sections_possible'))
-        else:
-            return queryset
-
-    def filter_exclude_completed(self, queryset, name, value):  # pylint: disable=unused-argument
-        """
-        The "value" parameter is either `True` or `False`
-        """
-        if value is True:
-            # This is a hack until we add `completed` field to LCGM
-            return queryset.filter(sections_worked__lt=F('sections_possible'))
-        else:
-            return queryset
-
-
 class UserFilterSet(django_filters.FilterSet):
     '''Provides filtering for User model objects
 
@@ -290,11 +113,12 @@ class UserFilterSet(django_filters.FilterSet):
     is_active = django_filters.BooleanFilter(name='is_active')
     is_staff = django_filters.BooleanFilter(name='is_staff')
     is_superuser = django_filters.BooleanFilter(name='is_superuser')
-    username = char_filter(field_name='username', lookup_expr='icontains')
-    email = char_filter(field_name='email', lookup_expr='icontains')
-    name = char_filter(field_name='profile__name', lookup_expr='icontains')
+    username = django_filters.CharFilter(lookup_expr='icontains')
+    email = django_filters.CharFilter(lookup_expr='icontains')
+    name = django_filters.CharFilter(lookup_expr='icontains', name='profile__name')
 
-    country = char_filter(field_name='profile__country', lookup_expr='iexact')
+    country = django_filters.CharFilter(
+        name='profile__country', lookup_expr='iexact')
     user_ids = char_method_filter(method='filter_user_ids')
     enrolled_in_course_id = char_method_filter(method='filter_enrolled_in_course_id')
 
@@ -401,8 +225,8 @@ class SiteFilterSet(django_filters.FilterSet):
     """
     Note: The Site filter has no knowledge of a default site, nor should it
     """
-    domain = char_filter(field_name='domain', lookup_expr='icontains')
-    name = char_filter(field_name='name', lookup_expr='icontains')
+    domain = django_filters.CharFilter(lookup_expr='icontains')
+    name = django_filters.CharFilter(lookup_expr='icontains')
 
     class Meta:
         model = Site

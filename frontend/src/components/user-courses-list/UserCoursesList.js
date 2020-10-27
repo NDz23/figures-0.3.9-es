@@ -23,7 +23,7 @@ class UserCoursesList extends Component {
           <ul className={styles['user-stats']}>
             <li className={styles['stat']}>
               <span className={styles['stat-label']}>
-                Enrolado:
+                Date enrolled:
               </span>
               <span className={styles['stat-value']}>
                 {course.getIn(['date_enrolled'])}
@@ -31,7 +31,7 @@ class UserCoursesList extends Component {
             </li>
             <li className={styles['stat']}>
               <span className={styles['stat-label']}>
-                Curso completado:
+                Course completed:
               </span>
               <span className={styles['stat-value']}>
                 {course.getIn(['progress_data', 'course_completed']) ? <FontAwesomeIcon icon={faCheck} className={styles['completed-icon']} /> : '-'}
@@ -39,7 +39,7 @@ class UserCoursesList extends Component {
             </li>
             <li className={styles['stat']}>
               <span className={styles['stat-label']}>
-                Puntos obtenidos:
+                Points earned:
               </span>
               <span className={styles['stat-value']}>
                 {course.getIn(['progress_data', 'course_progress_details', 'points_earned'], 0)} (of {course.getIn(['progress_data', 'course_progress_details', 'points_possible'], 0)})
@@ -47,7 +47,7 @@ class UserCoursesList extends Component {
             </li>
             <li className={styles['stat']}>
               <span className={styles['stat-label']}>
-                Progreso:
+                Overall progress:
               </span>
               <span className={styles['stat-value']}>
                 {(course.getIn(['progress_data', 'course_progress'], 0)*100).toFixed(2)}%

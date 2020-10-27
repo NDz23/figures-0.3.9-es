@@ -1,30 +1,9 @@
-"""Tests Figures filter classes
+'''Tests Figures filter classes
 
 Currently uses Django TestCase style classes instead of pytest style classes
 so that we can use TestCase.assertQuerysetEqual
 
-
-Test Debt
-=========
-Field parameters 'lookup_type' and 'lookup_expr'
-
-We are not adequately testing 'lookup_exr', which is supported only in
-Django Filter 1.0.0 and greater. Prior to Django Filters 1.0.0, 'lookup_type'
-was used.
-
-* Open edX Ginkgo uses Django Filter 0.11.0
-* Open edX Hawthorn uses Django Filter 1.0.4
-* Open edX Juniper uses Django Fitler 2.2.0
-
-TODO: Create mock view that tests the filters
-
-Doing this instead of directly calling the filter make sure that the execution
-chain is called. One of the defects we find is that our tests currently don't
-adequately tests for method signature differences for our custom filter methods.
-We need to make sure that our custom methods are properly handled by the
-different versions of "Django Filter", as different major relases are used by
-different Open edX releases.
-"""
+'''
 
 from dateutil.parser import parse as dateutil_parse
 
@@ -40,7 +19,6 @@ from figures.filters import (
     CourseDailyMetricsFilter,
     CourseEnrollmentFilter,
     CourseOverviewFilter,
-    EnrollmentMetricsFilter,
     SiteDailyMetricsFilter,
     CourseMauMetricsFilter,
     SiteMauMetricsFilter,
@@ -52,7 +30,6 @@ from figures.models import (
     SiteDailyMetrics,
     CourseMauMetrics,
     SiteMauMetrics,
-    LearnerCourseGradeMetrics,
 )
 
 from tests.factories import (
@@ -60,7 +37,6 @@ from tests.factories import (
     CourseEnrollmentFactory,
     CourseMauMetricsFactory,
     CourseOverviewFactory,
-    LearnerCourseGradeMetricsFactory,
     SiteDailyMetricsFactory,
     SiteMauMetricsFactory,
     SiteFactory,
@@ -125,6 +101,7 @@ class CourseEnrollmentFilterTest(TestCase):
         course_id = CourseEnrollment.objects.all()[0].course_id
         expected_results = CourseEnrollment.objects.filter(course_id=course_id)
         assert expected_results.count() != len(self.course_enrollments)
+        f = CourseEnrollmentFilter(queryset=expected_results)
 
         res = CourseEnrollmentFilter().filter_course_id(
             queryset=CourseEnrollment.objects.all(),
@@ -299,54 +276,6 @@ class SiteMauMetricsFilterTest(TestCase):
             f.qs,
             [o.id for o in self.models if o.date_for == the_date],
             lambda o: o.id, ordered=False)
-
-
-@pytest.mark.skipif(django_filters_pre_v1(),
-                    reason='Django Filter backward compatibility not implemented')
-@pytest.mark.django_db
-class EnrollmentMetricsFilterTest(TestCase):
-    """
-    Initially adding coverage where view tests are not covering
-    """
-    def setUp(self):
-        self.site = SiteFactory()
-
-        self.not_complete = LearnerCourseGradeMetricsFactory(site=self.site,
-                                                             sections_worked=1,
-                                                             sections_possible=2)
-        self.complete = LearnerCourseGradeMetricsFactory(site=self.site,
-                                                         sections_worked=2,
-                                                         sections_possible=2)
-        self.site_qs = LearnerCourseGradeMetrics.objects.filter(site=self.site)
-        self.filter = EnrollmentMetricsFilter(queryset=self.site_qs)
-
-    def test_filter_only_completed(self):
-        qs = self.filter.filter_only_completed(queryset=self.site_qs,
-                                               name='only_completed',
-                                               value=True)
-        assert qs.count() == 1 and qs[0] == self.complete
-
-    def test_filter_only_completed_no_value(self):
-        """Test that the method returns the queryset passed in
-        """
-        qs = self.filter.filter_only_completed(queryset=self.site_qs,
-                                               name='only_completed',
-                                               value=False)
-        assert qs == self.site_qs
-
-    def test_filter_exclude_completed(self):
-        qs = self.filter.filter_exclude_completed(queryset=self.site_qs,
-                                                  name='exclude_completed',
-                                                  value=True)
-        assert qs.count() == 1 and qs[0] == self.not_complete
-
-    def test_filter_only_excluded_no_value(self):
-        """Test that the method returns the queryset passed in
-        """
-        qs = self.filter.filter_exclude_completed(queryset=self.site_qs,
-                                                  name='exclude_completed',
-                                                  value=False)
-        assert qs == self.site_qs
 
 
 @pytest.mark.skipif(django_filters_pre_v1(),

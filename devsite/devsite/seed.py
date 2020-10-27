@@ -10,7 +10,6 @@ from dateutil.rrule import rrule, DAILY
 import faker
 import random
 
-from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.sites.models import Site
 from django.db.utils import IntegrityError
@@ -20,43 +19,22 @@ from courseware.models import StudentModule
 from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
 from student.models import CourseAccessRole, CourseEnrollment, UserProfile
 
-from organizations.models import Organization, OrganizationCourse
-
 from figures.compat import RELEASE_LINE, GeneratedCertificate
-from figures.models import (
-    CourseDailyMetrics,
-    LearnerCourseGradeMetrics,
-    SiteDailyMetrics,
-)
-from figures.helpers import (
-    as_course_key,
-    as_datetime,
-    days_from,
-    prev_day,
-    is_multisite,
-)
+from figures.models import CourseDailyMetrics, SiteDailyMetrics
+from figures.helpers import as_course_key, as_datetime, days_from, prev_day
 from figures.pipeline import course_daily_metrics as pipeline_cdm
 from figures.pipeline import site_daily_metrics as pipeline_sdm
 
 from devsite import cans
 
-if is_multisite():
-    # First trying this without capturing 'ImportError'
-    from organizations.models import UserOrganizationMapping
-
-
 FAKE = faker.Faker()
 LAST_DAY = days_from(datetime.datetime.now(), -2).replace(tzinfo=utc)
 
-
-DAYS_BACK = settings.DEVSITE_SEED['DAYS_BACK']
-NUM_LEARNERS_PER_COURSE = settings.DEVSITE_SEED['NUM_LEARNERS_PER_COURSE']
+DAYS_BACK = 180
+NO_LEARNERS_PER_COURSE = 50
 
 # Quick and dirty debuging
 VERBOSE = False
-
-
-FOO_ORG = 'FOO'
 
 
 def get_site():
@@ -64,10 +42,6 @@ def get_site():
     In demo mode, we have just one site (for now)
     """
     return Site.objects.first()
-
-
-def today():
-    return datetime.datetime.utcnow().date()
 
 
 def days_back_list(days_back):
@@ -100,7 +74,7 @@ def seed_course_overviews(data=None):
     if not data:
         data = cans.COURSE_OVERVIEW_DATA
         # append with randomly generated course overviews to test pagination
-        new_courses = [generate_course_overview(i, org=FOO_ORG) for i in xrange(20)]
+        new_courses = [generate_course_overview(i, org='FOO') for i in xrange(20)]
         data += new_courses
 
     for rec in data:
@@ -111,8 +85,6 @@ def seed_course_overviews(data=None):
                 display_org_with_default=rec['org'],
                 number=rec['number'],
                 created=as_datetime(rec['created']).replace(tzinfo=utc),
-                start=as_datetime(rec['enrollment_start']).replace(tzinfo=utc),
-                end=as_datetime(rec['enrollment_end']).replace(tzinfo=utc),
                 enrollment_start=as_datetime(rec['enrollment_start']).replace(tzinfo=utc),
                 enrollment_end=as_datetime(rec['enrollment_end']).replace(tzinfo=utc),
             )
@@ -184,7 +156,7 @@ def seed_course_enrollments():
     TODO: make the number of users variable
     """
     for co in CourseOverview.objects.all():
-        users = seed_users(cans.users.UserGenerator(NUM_LEARNERS_PER_COURSE))
+        users = seed_users(cans.users.UserGenerator(NO_LEARNERS_PER_COURSE))
         seed_course_enrollments_for_course(co.id, users, DAYS_BACK)
 
 
@@ -293,89 +265,13 @@ def seed_site_daily_metrics(data=None):
             date_for=dt, force_update=True)
 
 
-def seed_lcgm_for_course(**_kwargs):
-    """Quick hack to create a number of LCGM records
-    Improvement is to add a devsite model for "synthetic course policy". This
-    model specifies course info: points possible, sections possible, number of
-    learners or learer range, learner completion/progress curve
-    """
-    date_for = _kwargs.get('date_for', datetime.datetime.utcnow().date())
-    site = _kwargs.get('site', get_site())
-    course_id = _kwargs.get('course_id')
-    points_possible = _kwargs.get('points_possible', 20)
-    points_earned = _kwargs.get('points_earned', 10)
-    sections_possible = _kwargs.get('sections_possible', 10)
-    sections_worked = _kwargs.get('sections_worked', 5)
-    for ce in CourseEnrollment.objects.filter(course_id=as_course_key(course_id)):
-        LearnerCourseGradeMetrics.objects.update_or_create(
-            site=site,
-            user=ce.user,
-            course_id=str(course_id),
-            date_for=date_for,
-            defaults=dict(
-                points_possible=points_possible,
-                points_earned=points_earned,
-                sections_possible=sections_possible,
-                sections_worked=sections_worked
-            )
-        )
-
-
-def seed_lcgm_all():
-    for co in CourseOverview.objects.all():
-        print('Seeding LCGM for course {}'.format(str(co.id)))
-        for i, date_for in enumerate(days_back_list(10)):
-            seed_args = dict(
-                date_for=date_for,
-                course_id=str(co.id),
-                points_possible=100,
-                points_earned=i*5,
-                sections_possible=20,
-                sections_worked=i*2,
-            )
-            seed_lcgm_for_course(**seed_args)
-
-
-def hotwire_multisite():
-    """
-    This is a quick and dirty implementation of a single site in multisite mode
-    """
-    params = dict(
-        name='Foo Organization',
-        short_name='FOO',
-        description='Foo org description',
-        logo=None,
-        active=True,
-    )
-    org = Organization.objects.create(**params)
-    if is_multisite():
-        org.sites = [get_site()]
-        org.save()
-
-    for course in CourseOverview.objects.all():
-        OrganizationCourse.objects.create(course_id=str(course.id),
-                                          organization=org,
-                                          active=True)
-    for user in get_user_model().objects.all():
-        # For now, not setting is_amc_admin roles
-        UserOrganizationMapping.objects.create(user=user,
-                                               organization=org,
-                                               is_active=True)
-
-
 def wipe():
-    print('Wiping synthetic data...')
     clear_non_admin_users()
     CourseEnrollment.objects.all().delete()
     StudentModule.objects.all().delete()
     CourseOverview.objects.all().delete()
     CourseDailyMetrics.objects.all().delete()
     SiteDailyMetrics.objects.all().delete()
-    LearnerCourseGradeMetrics.objects.all().delete()
-    Organization.objects.all().delete()
-    OrganizationCourse.objects.all().delete()
-    if is_multisite():
-        UserOrganizationMapping.objects.all().delete()
 
 
 def seed_all():
@@ -385,13 +281,8 @@ def seed_all():
     seed_course_overviews()
     print("seeding users...")
     seed_users()
-
     print("seeding course enrollments...")
     seed_course_enrollments()
-
-    if is_multisite():
-        print("Hotwiring multisite...")
-        hotwire_multisite()
 
     print("- skipping seeding seed_course_access_roles, broken")
     # print("seeding course enrollments...")

@@ -8,27 +8,20 @@ Reporting and data retrieval app for `Open edX <https://open.edx.org/>`__.
 
 .. _notice_section:
 
-Figures release 0.3.9 Spanish
-====================================
-
-* This is a Spanish translation of figures
-
-
-24 Apr 2020 - Figures release 0.3.9
+24 APR 2020 - Figures release 0.3.9
 ===================================
 
 * Updated UI, MAU fix, style fixes, label changes
 * Added site monthly metrics scheduled tasks to fill last month's MAU
 * Added Django Debug Toolbar to devsite
 
-
-10 Apr 2020 - Figures release 0.3.8
+10 APR 2020 - Figures release 0.3.8
 ===================================
 
 * Performance improvement to "Site Monthly Metrics" active users endpoint
 
 
-8 Apr 2020 - Figures release 0.3.7
+8 APR 2020 - Figures release 0.3.7
 ==================================
 
 * Updated UI to improve performance and usability

@@ -57,7 +57,7 @@ class SingleReportContent extends Component {
           <div className={styles['content-meta']}>
             <div className={styles['meta-description']}>
               <span className={styles['meta-heading']}>
-                Sobre este reporte:
+                About this report:
               </span>
               <ContentEditable
                 className={styles['report-description']}
@@ -69,7 +69,7 @@ class SingleReportContent extends Component {
             </div>
             <div className={styles['meta-date']}>
               <span className={styles['meta-heading']}>
-                Creaci&oacute;n:
+                Date created:
               </span>
               <span className={styles['meta-content']}>
                 {this.state.dateCreated}
@@ -77,7 +77,7 @@ class SingleReportContent extends Component {
             </div>
             <div className={styles['meta-author']}>
               <span className={styles['meta-heading']}>
-                Creado por:
+                Created by:
               </span>
               <span className={styles['meta-content']}>
                 {this.state.reportAuthor}

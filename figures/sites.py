@@ -39,22 +39,6 @@ class CourseNotInSiteError(CrossSiteResourceError):
     pass
 
 
-class UnlinkedCourseError(Exception):
-    """Raise when we need to fail if we can't get the site for a course
-
-    This will happen in multisite mode if the course is not linked to the site.
-    In Tahoe Hawthorn, we use the Appsembler fork of `edx-organizations` to map
-    courses to sites. For community and standalone deployments, we don't expect
-    courses to map to sites, so we just return the app instance's default site.
-
-    * This is new to support enrollment metrics rework (May 2020)
-    * We need to evaluate if we want to make sites.get_site_for_course` to
-      raise this automatically. But first we need to make sure we have test
-      coverage to make sure we don't introduce new bugs
-    """
-    pass
-
-
 def site_to_id(site):
     """
     Helper to cast site or site id to id
@@ -136,13 +120,6 @@ def get_organizations_for_site(site):
 
 
 def get_course_keys_for_site(site):
-    """
-
-    Developer note: We could improve this function with caching
-    Question is which is the most efficient way to know cache expiry
-
-    We may also be able to reduce the queries here to also improve performance
-    """
     if figures.helpers.is_multisite():
         orgs = organizations.models.Organization.objects.filter(sites__in=[site])
         org_courses = organizations.models.OrganizationCourse.objects.filter(
@@ -167,9 +144,6 @@ def get_courses_for_site(site):
 
 
 def get_user_ids_for_site(site):
-    """
-    We can use organization_instance.users instead
-    """
     if figures.helpers.is_multisite():
         orgs = organizations.models.Organization.objects.filter(sites__in=[site])
         mappings = organizations.models.UserOrganizationMapping.objects.filter(
@@ -207,36 +181,3 @@ def get_student_modules_for_course_in_site(site, course_id):
 def get_student_modules_for_site(site):
     course_ids = get_course_keys_for_site(site)
     return StudentModule.objects.filter(course_id__in=course_ids)
-
-
-def course_enrollments_for_course(course_id):
-    """Return a queryset of all `CourseEnrollment` records for a course
-
-    Relies on the fact that course_ids are globally unique
-    """
-    return CourseEnrollment.objects.filter(course_id=as_course_key(course_id))
-
-
-def enrollments_for_course_ids(course_ids):
-    """
-    figures.sites is a temporary home for this function
-    """
-    ckeys = [as_course_key(cid) for cid in course_ids]
-    return CourseEnrollment.objects.filter(course_id__in=ckeys)
-
-
-def users_enrolled_in_courses(course_ids):
-    """
-    figures.sites is a temporary home for this function
-    """
-    enrollments = enrollments_for_course_ids(course_ids)
-    user_ids = enrollments.order_by('user_id').values('user_id').distinct()
-    return get_user_model().objects.filter(id__in=user_ids)
-
-
-def student_modules_for_course_enrollment(ce):
-    """Return a queryset of all `StudentModule` records for a `CourseEnrollment`1
-
-    Relies on the fact that course_ids are globally unique
-    """
-    return StudentModule.objects.filter(student=ce.user, course_id=ce.course_id)
