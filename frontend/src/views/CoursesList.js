@@ -118,7 +118,7 @@ class CoursesList extends Component {
           <div className={styles['course-name']}>
             <div className={styles['in-cell-label-value']}>
               <div className={styles['mobile-label']}>
-                Course name:
+                Nombre del curso:
               </div>
               <div className={styles['mobile-value']}>
                 <Link
@@ -133,7 +133,7 @@ class CoursesList extends Component {
           <div className={styles['course-id']}>
             <div className={styles['in-cell-label-value']}>
               <div className={styles['mobile-label']}>
-                Course ID:
+                ID del curso:
               </div>
               <div className={styles['mobile-value']}>
                 {course['course_id']}
@@ -143,7 +143,7 @@ class CoursesList extends Component {
           <div className={styles['start-date']}>
             <div className={styles['in-cell-label-value']}>
               <div className={styles['mobile-label']}>
-                Course start:
+                Inicio:
               </div>
               <div className={styles['mobile-value']}>
                 {parseCourseDate(course['start_date'])}
@@ -153,7 +153,7 @@ class CoursesList extends Component {
           <div className={styles['self-paced']}>
             <div className={styles['in-cell-label-value']}>
               <div className={styles['mobile-label']}>
-                Self paced:
+                Ritmo propio:
               </div>
               <div className={styles['mobile-value']}>
                 {course['self_paced'] ? <FontAwesomeIcon icon={faCheck} className={styles['checkmark-icon']} /> : '-'}
@@ -163,7 +163,7 @@ class CoursesList extends Component {
           <div className={styles['enrolments']}>
             <div className={styles['in-cell-label-value']}>
               <div className={styles['mobile-label']}>
-                Enrolments:
+                Enrolamientos:
               </div>
               <div className={styles['mobile-value']}>
                 {course['metrics']['enrollment_count']}
@@ -173,7 +173,7 @@ class CoursesList extends Component {
           <div className={styles['completions']}>
             <div className={styles['in-cell-label-value']}>
               <div className={styles['mobile-label']}>
-                Completions:
+                Completados:
               </div>
               <div className={styles['mobile-value']}>
                 {course['metrics']['num_learners_completed']}
@@ -185,7 +185,7 @@ class CoursesList extends Component {
               className={styles['course-action']}
               to={'/figures/course/' + course['course_id']}
             >
-              Details
+              Detalles
             </Link>
           </div>
         </li>
@@ -196,14 +196,14 @@ class CoursesList extends Component {
       <div className="ef--layout-root">
         <HeaderAreaLayout>
           <HeaderContentStatic
-            title='Courses list'
-            subtitle={'This view allows you to browse your sites courses. Total number of results: ' + this.state.count + '.'}
+            title='Lista de cursos'
+            subtitle={'Aqu&iacute; puedes ver todos los cursos de tu plataforma. Cantidad de resultados: ' + this.state.count + '.'}
           />
         </HeaderAreaLayout>
         <div className={cx({ 'container': true, 'courses-content': true})}>
           <ListSearch
             valueChangeFunction={this.setSearchQuery}
-            inputPlaceholder='Search by course name, code or ID...'
+            inputPlaceholder='Buscar curso por nombre, c&oacute;digo o ID...'
           />
           {this.state.pages ? (
             <Paginator
@@ -222,7 +222,7 @@ class CoursesList extends Component {
                   onClick={() => (this.state.ordering !== 'display_name') ? this.setOrdering('display_name') : this.setOrdering('-display_name')}
                 >
                   <span>
-                    Course name
+                    Nombre del curso
                   </span>
                   {(this.state.ordering === 'display_name') ? (
                     <FontAwesomeIcon icon={faAngleDoubleUp} />
@@ -232,10 +232,10 @@ class CoursesList extends Component {
                 </button>
               </div>
               <div className={styles['course-id']}>
-                Course ID:
+                ID del curso:
               </div>
               <div className={styles['start-date']}>
-                Course start:
+                Inicio:
               </div>
               <div className={styles['self-paced']}>
                 <button
@@ -243,7 +243,7 @@ class CoursesList extends Component {
                   onClick={() => (this.state.ordering !== 'self_paced') ? this.setOrdering('self_paced') : this.setOrdering('-self_paced')}
                 >
                   <span>
-                    Self paced
+                    Ritmo propio
                   </span>
                   {(this.state.ordering === 'self_paced') ? (
                     <FontAwesomeIcon icon={faAngleDoubleUp} />
@@ -253,10 +253,10 @@ class CoursesList extends Component {
                 </button>
               </div>
               <div className={styles['enrolments']}>
-                Enrolments:
+                Enrolamientos:
               </div>
               <div className={styles['completions']}>
-                Completions:
+                Completados:
               </div>
               <div className={styles['action-container']}>
 

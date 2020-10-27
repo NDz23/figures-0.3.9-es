@@ -101,7 +101,7 @@ class UsersList extends Component {
           <div className={styles['user-fullname']}>
             <div className={styles['in-cell-label-value']}>
               <div className={styles['mobile-label']}>
-                Full name:
+                Nombre completo:
               </div>
               <div className={styles['mobile-value']}>
                 <Link
@@ -116,7 +116,7 @@ class UsersList extends Component {
           <div className={styles['username']}>
             <div className={styles['in-cell-label-value']}>
               <div className={styles['mobile-label']}>
-                Username:
+                Usuario:
               </div>
               <div className={styles['mobile-value']}>
                 {user['username']}
@@ -126,7 +126,7 @@ class UsersList extends Component {
           <div className={styles['is-active']}>
             <div className={styles['in-cell-label-value']}>
               <div className={styles['mobile-label']}>
-                Is activated:
+                Activado:
               </div>
               <div className={styles['mobile-value']}>
                 {user['is_active'] ? <FontAwesomeIcon icon={faCheck} className={styles['checkmark-icon']} /> : '-'}
@@ -136,7 +136,7 @@ class UsersList extends Component {
           <div className={styles['date-joined']}>
             <div className={styles['in-cell-label-value']}>
               <div className={styles['mobile-label']}>
-                Date joined:
+                Fecha registro:
               </div>
               <div className={styles['mobile-value']}>
                 {user['date_joined']}
@@ -146,7 +146,7 @@ class UsersList extends Component {
           <div className={styles['number-of-courses']}>
             <div className={styles['in-cell-label-value']}>
               <div className={styles['mobile-label']}>
-                No. of courses:
+                No. de cursos:
               </div>
               <div className={styles['mobile-value']}>
                 {user['courses'].length}
@@ -158,7 +158,7 @@ class UsersList extends Component {
               className={styles['user-action']}
               to={'/figures/user/' + user['id']}
             >
-              User details
+              Detalles del usuario
             </Link>
           </div>
         </li>
@@ -169,14 +169,14 @@ class UsersList extends Component {
       <div className="ef--layout-root">
         <HeaderAreaLayout>
           <HeaderContentStatic
-            title='Users list'
-            subtitle={'This view allows you to browse your sites users. Total number of results: ' + this.state.count + '.'}
+            title='Lista de usuarios'
+            subtitle={'Aqu&iacute; puedes ver todos los usuarios de tu plataforma. Cantidad de resultados: ' + this.state.count + '.'}
           />
         </HeaderAreaLayout>
         <div className={cx({ 'container': true, 'users-content': true})}>
           <ListSearch
             valueChangeFunction={this.setSearchQuery}
-            inputPlaceholder='Search by users name, username or email...'
+            inputPlaceholder='Buscar usuarios por nombre, usuario o correo...'
           />
           {this.state.pages ? (
             <Paginator
@@ -195,7 +195,7 @@ class UsersList extends Component {
                   onClick={() => (this.state.ordering !== 'profile__name') ? this.setOrdering('profile__name') : this.setOrdering('-profile__name')}
                 >
                   <span>
-                    User full name
+                   Nombre completo del usuario
                   </span>
                   {(this.state.ordering === 'profile__name') ? (
                     <FontAwesomeIcon icon={faAngleDoubleUp} />
@@ -210,7 +210,7 @@ class UsersList extends Component {
                   onClick={() => (this.state.ordering !== 'username') ? this.setOrdering('username') : this.setOrdering('-username')}
                 >
                   <span>
-                    Username
+                    Usuario
                   </span>
                   {(this.state.ordering === 'username') ? (
                     <FontAwesomeIcon icon={faAngleDoubleUp} />
@@ -225,7 +225,7 @@ class UsersList extends Component {
                   onClick={() => (this.state.ordering !== 'is_active') ? this.setOrdering('is_active') : this.setOrdering('-is_active')}
                 >
                   <span>
-                    Is activated
+                    Activado
                   </span>
                   {(this.state.ordering === 'is_active') ? (
                     <FontAwesomeIcon icon={faAngleDoubleUp} />
@@ -240,7 +240,7 @@ class UsersList extends Component {
                   onClick={() => (this.state.ordering !== 'date_joined') ? this.setOrdering('date_joined') : this.setOrdering('-date_joined')}
                 >
                   <span>
-                    Date joined
+                    Fecha registro
                   </span>
                   {(this.state.ordering === 'date_joined') ? (
                     <FontAwesomeIcon icon={faAngleDoubleUp} />
@@ -250,7 +250,7 @@ class UsersList extends Component {
                 </button>
               </div>
               <div className={styles['number-of-courses']}>
-                Courses enroled in:
+                No. de cursos:
               </div>
               <div className={styles['action-container']}>
 

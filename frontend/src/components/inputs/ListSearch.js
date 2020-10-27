@@ -71,7 +71,7 @@ class ListSearch extends Component {
 
 ListSearch.defaultProps = {
   waitInterval: 1000,
-  inputPlaceholder: 'Start typing...',
+  inputPlaceholder: 'Empieza a escribir...',
 }
 
 ListSearch.propTypes = {

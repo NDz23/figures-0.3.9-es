@@ -26,7 +26,7 @@ class CustomTooltip extends Component {
       return (
         <div className={styles['bar-tooltip']}>
           <span className={styles['tooltip-value']}>{payload[0].value}</span>
-          <p>learners currently at this section</p>
+          <p>estudiantes actualmente en esta secci&oacute;n</p>
         </div>
       );
     }
@@ -51,17 +51,17 @@ class HeaderContentCourse extends Component {
             <span className={styles['course-code']}>{this.props.courseCode}</span>
             <span className={styles['course-info-separator']}>|</span>
             {this.props.isSelfPaced ? (
-              <span className={styles['course-date']}>This course is self-paced</span>
+              <span className={styles['course-date']}>Este curso es a ritmo propio</span>
             ) : [
-              <span key='courseStart' className={styles['course-date']}>Starts: {parseCourseDate(this.props.startDate)}</span>,
+              <span key='courseStart' className={styles['course-date']}>Inicia: {parseCourseDate(this.props.startDate)}</span>,
               this.props.endDate && <span key='separator' className={styles['course-info-separator']}>|</span>,
-              this.props.endDate && <span key='courseEnd' className={styles['course-date']}>Ends: {parseCourseDate(this.props.endDate)}</span>,
+              this.props.endDate && <span key='courseEnd' className={styles['course-date']}>Finaliza: {parseCourseDate(this.props.endDate)}</span>,
             ]}
           </div>
           {displayCourseHeaderGraph ? [
             <span className={styles['text-separator']} />,
             <div className={styles['learners-info']}>
-              <strong>{this.props.learnersEnrolled && this.props.learnersEnrolled['current_month']}</strong> learners currently enrolled, progressing through sections as displayed below:
+              <strong>{this.props.learnersEnrolled && this.props.learnersEnrolled['current_month']}</strong> estudiantes enrolados actualmente, progresando a trav&eacute;s de las secciones como se muestra a continuaci&oacute;n:
             </div>
           ] : (
             <span className={styles['graph-bottom-padding']} />

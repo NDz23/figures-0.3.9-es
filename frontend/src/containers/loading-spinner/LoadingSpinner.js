@@ -20,7 +20,7 @@ const LoadingSpinner = props => {
             <HashLoader
               color={appsemblerBlue}
             />
-            <span>Loading your data...</span>
+            <span>Cargando la informaci&oacute;n...</span>
           </div>
         </div>
       )}

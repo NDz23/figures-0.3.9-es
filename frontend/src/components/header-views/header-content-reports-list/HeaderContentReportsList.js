@@ -11,11 +11,11 @@ class HeaderContentReportsList extends Component {
     return (
       <section className={cx({ 'header-content-reports-list': true, 'container': true})}>
         <div className={styles['title-container']}>
-          <div className={styles['title-text']}>Reports list</div>
+          <div className={styles['title-text']}>Lista de reportes</div>
           <span className={styles['title-decoration']} />
         </div>
         <div className={styles['options-container']}>
-          <button className={styles['header-option-button']}>Create a new report</button>
+          <button className={styles['header-option-button']}>Crear un nuevo reporte</button>
         </div>
       </section>
     );

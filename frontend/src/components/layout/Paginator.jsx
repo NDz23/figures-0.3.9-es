@@ -86,13 +86,13 @@ class Paginator extends React.Component {
               className={styles['text-item']}
               onClick={() => this.props.pageSwitchFunction(1)}
             >
-              First
+              Primero
             </button>
           ) : (
             <span
               className={styles['text-item-dummy']}
             >
-              First
+              Primero
             </span>
           )}
           {(this.state.currentPage !== 1) ? (
@@ -100,13 +100,13 @@ class Paginator extends React.Component {
               className={styles['text-item']}
               onClick={() => this.props.pageSwitchFunction(this.props.currentPage-1)}
             >
-              Previous
+              Anterior
             </button>
           ) : (
             <span
               className={styles['text-item-dummy']}
             >
-              Previous
+              Anterior
             </span>
           )}
           {pageNumbers}
@@ -115,13 +115,13 @@ class Paginator extends React.Component {
               className={styles['text-item']}
               onClick={() => this.props.pageSwitchFunction(this.props.currentPage+1)}
             >
-              Next
+              Siguiente
             </button>
           ) : (
             <span
               className={styles['text-item-dummy']}
             >
-              Next
+              Siguiente
             </span>
           )}
           {(this.state.currentPage !== this.props.pages) ? (
@@ -129,19 +129,19 @@ class Paginator extends React.Component {
               className={styles['text-item']}
               onClick={() => this.props.pageSwitchFunction(this.props.pages)}
             >
-              Last
+              &Uacute;ltimo
             </button>
           ) : (
             <span
               className={styles['text-item-dummy']}
             >
-              Last
+              &Uacute;ltimo
             </span>
           )}
         </div>
         <div className={styles['dropdown-controls-container']}>
           <span className={styles['paginator-dropdown-label']}>
-            Per page:
+            Por p&aacute;gina:
           </span>
           <div className={styles['dropdown-inner-container']}>
             <Select

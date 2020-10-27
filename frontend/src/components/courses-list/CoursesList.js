@@ -76,10 +76,10 @@ class CoursesList extends Component {
             <span>Sort by:</span>
             <ul>
               <li onClick={this.changeSorting.bind(this, 'alphabetically')} className={cx({ 'sort-item': true, 'active': (this.state.sortListBy === 'alphabetically')})}>A-Z</li>
-              <li onClick={this.changeSorting.bind(this, 'learners-enrolled')} className={cx({ 'sort-item': true, 'active': (this.state.sortListBy === 'learners-enrolled')})}>Learners enrolled</li>
-              <li onClick={this.changeSorting.bind(this, 'average-progress')} className={cx({ 'sort-item': true, 'active': (this.state.sortListBy === 'average-progress')})}>Average progress</li>
-              <li onClick={this.changeSorting.bind(this, 'completion-time')} className={cx({ 'sort-item': true, 'active': (this.state.sortListBy === 'completion-time')})}>Avg. time for completion</li>
-              <li onClick={this.changeSorting.bind(this, 'completed-learners')} className={cx({ 'sort-item': true, 'active': (this.state.sortListBy === 'completed-learners')})}>No. of compl. learners</li>
+              <li onClick={this.changeSorting.bind(this, 'learners-enrolled')} className={cx({ 'sort-item': true, 'active': (this.state.sortListBy === 'learners-enrolled')})}>Estudiantes enrolados</li>
+              <li onClick={this.changeSorting.bind(this, 'average-progress')} className={cx({ 'sort-item': true, 'active': (this.state.sortListBy === 'average-progress')})}>Progreso promedio</li>
+              <li onClick={this.changeSorting.bind(this, 'completion-time')} className={cx({ 'sort-item': true, 'active': (this.state.sortListBy === 'completion-time')})}>Tiempo promedio para completar</li>
+              <li onClick={this.changeSorting.bind(this, 'completed-learners')} className={cx({ 'sort-item': true, 'active': (this.state.sortListBy === 'completed-learners')})}>Estudiantes que han completado</li>
             </ul>
           </div>
         </div>
@@ -92,7 +92,7 @@ class CoursesList extends Component {
 }
 
 CoursesList.defaultProps = {
-  listTitle: 'Course data:',
+  listTitle: 'Informaci&oacute;n del curso:',
   CoursesList: []
 }
 

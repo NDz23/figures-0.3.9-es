@@ -22,18 +22,18 @@ const parseReportDate = (fetchedDate) => {
 
 // month naming
 const monthNames = {
-  1: 'January',
-  2: 'February',
-  3: 'March',
-  4: 'April',
-  5: 'May',
-  6: 'June',
-  7: 'July',
-  8: 'August',
-  9: 'September',
-  10: 'October',
-  11: 'November',
-  12: 'December',
+  1: 'Enero',
+  2: 'Febrero',
+  3: 'Marzo',
+  4: 'Abril',
+  5: 'Mayo',
+  6: 'Junio',
+  7: 'Julio',
+  8: 'Agosto',
+  9: 'Septiembre',
+  10: 'Octubrer',
+  11: 'Noviembre',
+  12: 'Deciembre',
 }
 
 class CsvReports extends Component {
@@ -43,8 +43,8 @@ class CsvReports extends Component {
     this.state = {
       displayedAutoReports: Immutable.fromJS([]),
       filterOptions: Immutable.fromJS({
-        'years': [{value: 0, label: 'No filter'}],
-        'months': [{value: 0, label: 'No filter'}]
+        'years': [{value: 0, label: 'Sin filtro'}],
+        'months': [{value: 0, label: 'Sin filtro'}]
       }),
       autoReportsMonthFilter: 0,
       autoReportsYearFilter: 0,
@@ -93,8 +93,8 @@ class CsvReports extends Component {
     filterYears = filterYears.sort();
     filterMonths = filterMonths.sort();
     // store lists of years and months in a format that suits our selector component
-    let filterYearsFull = Immutable.List([{value: 0, label: 'No filter'}]);
-    let filterMonthsFull = Immutable.List([{value: 0, label: 'No filter'}]);
+    let filterYearsFull = Immutable.List([{value: 0, label: 'Sin filtro'}]);
+    let filterMonthsFull = Immutable.List([{value: 0, label: 'Sin filtro'}]);
     filterYears.forEach((year, index) => {
       filterYearsFull = filterYearsFull.push({value: year, label: year.toString()});
     });
@@ -162,7 +162,7 @@ class CsvReports extends Component {
               className={styles['view-report-button']}
               target="_blank"
             >
-              View report
+              Ver reporte
             </a>
           </div>
         </li>
@@ -178,15 +178,15 @@ class CsvReports extends Component {
           <div className={styles['reports-section']}>
             <div className={styles['reports-filters']}>
               <div className={styles['header-title']}>
-                Regular automatically generated CSV reports
+                Reportes CSV generados autom&aacute;ticamente
               </div>
               <div className={styles['filters-heading']}>
-                Filter reports
+                Filtrar reportes
               </div>
               <span className={styles['filters-heading-separator']}></span>
               <div className={styles['filter']}>
                 <div className={styles['dropdown-container']}>
-                  <span>Year:</span>
+                  <span>Año:</span>
                   <Select
                     options={this.state.filterOptions.get('years').toJS()}
                     onChange = {this.setAutoReportYearFilter}
@@ -196,7 +196,7 @@ class CsvReports extends Component {
               </div>
               <div className={styles['filter']}>
                 <div className={styles['dropdown-container']}>
-                  <span>Month:</span>
+                  <span>Mes:</span>
                   <Select
                     options={this.state.filterOptions.get('months').toJS()}
                     onChange = {this.setAutoReportMonthFilter}
@@ -210,28 +210,28 @@ class CsvReports extends Component {
                 className={cx({ 'report-selector': true, 'active': (this.state.selectedAutoReports === 'csvUserReports')})}
                 onClick={() => this.setSelectedAutoReports('csvUserReports')}
               >
-                User Reports
+                Reportes de usuarios
               </button>
               <button
                 className={cx({ 'report-selector': true, 'active': (this.state.selectedAutoReports === 'csvGradeReports')})}
                 onClick={() => this.setSelectedAutoReports('csvGradeReports')}
               >
-                Grade Reports
+                Reportes de calificaciones
               </button>
               <button
                 className={cx({ 'report-selector': true, 'active': (this.state.selectedAutoReports === 'csvCourseMetrics')})}
                 onClick={() => this.setSelectedAutoReports('csvCourseMetrics')}
               >
-                Course Metrics Reports
+                Reportes de m&eacute;tricas de curso
               </button>
             </div>
             <ul className={styles['reports-list']}>
               <li key='list-header' className={cx(styles['report'], styles['list-header'])}>
                 <div className={styles['report-name']}>
-                  Report name:
+                  Nombre del reporte:
                 </div>
                 <div className={styles['report-timestamp']}>
-                  Time created:
+                  Hora de craci&oacute;n:
                 </div>
                 <div className={styles['report-buttons']}>
                 </div>

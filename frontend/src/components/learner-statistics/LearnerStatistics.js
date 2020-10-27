@@ -111,9 +111,9 @@ class LearnerStatistics extends Component {
       const learnerCountryTemp = learner.getIn(['country']) ? learner.getIn(['country']) : 'n-a';
       let foundIndex = countryStats.findIndex(item => (item.value === learnerCountryTemp));
       if (foundIndex !== -1) {
-        countryStats = countryStats.set(foundIndex, { value: learnerCountryTemp, label: (learnerCountryTemp !== 'n-a') ? countries.getName(learnerCountryTemp, "en") : "Not available", count: countryStats.get(foundIndex).count + 1 });
+        countryStats = countryStats.set(foundIndex, { value: learnerCountryTemp, label: (learnerCountryTemp !== 'n-a') ? countries.getName(learnerCountryTemp, "en") : "No disponible", count: countryStats.get(foundIndex).count + 1 });
       } else {
-        countryStats = countryStats.push({ value: learnerCountryTemp, label: (learnerCountryTemp !== 'n-a') ? countries.getName(learnerCountryTemp, "en") : "Not available", count: 1 })
+        countryStats = countryStats.push({ value: learnerCountryTemp, label: (learnerCountryTemp !== 'n-a') ? countries.getName(learnerCountryTemp, "en") : "No disponible", count: 1 })
       }
       //gender
       const genderTemp = learner.getIn(['gender']) ? learner.getIn(['gender']) : 'n-a';
@@ -157,9 +157,9 @@ class LearnerStatistics extends Component {
 
   render() {
     const dropdownOptions = List([
-      { value: 'education', label: 'By education level' },
-      { value: 'gender', label: 'By gender' },
-      { value: 'country', label: 'By country' },
+      { value: 'education', label: 'Por nivel educativo' },
+      { value: 'gender', label: 'Por g&eacute;nero' },
+      { value: 'country', label: 'Por pa&iacute;s' },
     ])
 
     return (
@@ -169,7 +169,7 @@ class LearnerStatistics extends Component {
             {this.props.listTitle}
           </div>
           <div className={styles['dropdown-container']}>
-            <span>Course learners breakdown type:</span>
+            <span>Tipo de desglose de los alumnos del curso:</span>
             <Select
               options={dropdownOptions.toArray()}
               onChange = {this.onChangeBreakdownType}
@@ -190,7 +190,7 @@ class LearnerStatistics extends Component {
 }
 
 LearnerStatistics.defaultProps = {
-  listTitle: 'Learner statistics:',
+  listTitle: 'Estad&iacute;sticas de estudiantes:',
   breakdownType: 'country',
 }
 

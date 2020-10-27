@@ -33,31 +33,31 @@ class DashboardContent extends Component {
           <BaseStatCard
             mainValue={this.props.generalData.getIn(['registeredUsers', 'current_month'], 0)}
             valueHistory={this.props.generalData.getIn(['registeredUsers', 'history'], [])}
-            cardTitle='Registered learners'
+            cardTitle='Estudiantes registrados'
           />
           <BaseStatCard
             mainValue={this.props.generalData.getIn(['newUsers', 'current_month'], 0)}
             valueHistory={this.props.generalData.getIn(['newUsers', 'history'], [])}
-            cardTitle='New learners'
+            cardTitle='Estudiantes nuevos'
           />
           <BaseStatCard
             mainValue={this.props.generalData.getIn(['courseEnrollments', 'current_month'], 0)}
             valueHistory={this.props.generalData.getIn(['courseEnrollments', 'history'], [])}
-            cardTitle='Course enrollments'
+            cardTitle='Enrolamientos a cursos'
           />
           <BaseStatCard
             mainValue={this.props.generalData.getIn(['courseCompletions', 'current_month'], 0)}
             valueHistory={this.props.generalData.getIn(['courseCompletions', 'history'], [])}
-            cardTitle='Course completions'
+            cardTitle='Cursos completados'
           />
         </div>
         <div className={cx({ 'container': true, 'functionality-callout': true})}>
-          <h3>Quickly access a data for a specific course using the <strong>"Jump to a course"</strong> widget on top, or <strong>Browse all the courses</strong> on the following screen:</h3>
+          <h3>Acceda r&aacute;pidamente a los datos de un curso espec&iacute;fico utilizando el bot&oacute;n <strong>"Ir a curso"</strong> en la parte superior, o <strong>Navegar cursos</strong> a continuaci&oacute;n:</h3>
           <NavLink
             to="/figures/courses"
             className={styles['functionality-callout-cta']}
           >
-            Browse Courses
+            Navegar cursos
           </NavLink>
         </div>
       </div>

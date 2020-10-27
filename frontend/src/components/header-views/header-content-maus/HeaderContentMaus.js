@@ -48,16 +48,16 @@ class HeaderContentMaus extends Component {
         <div className={cx({ 'main-content': true, 'container': true})}>
           <div className={styles['users-count']}>
             <span className={styles['number']}>{currentPeriodValue}</span>
-            <span className={styles['text']}>active users (MAUs) this month</span>
+            <span className={styles['text']}>usuarios activos (UAMs) este mes</span>
           </div>
           <span className={styles['text-separator']} />
           <div className={styles['comparison-box']}>
             <span className={styles['comparison-box__icon']}>{comparisonIcon}</span>
             <span className={styles['comparison-box__text']}>
-              {(currentPeriodValue >= previousPeriodValue) ? 'up' : 'down'} {comparisonValue} compared to last month
+              {(currentPeriodValue >= previousPeriodValue) ? 'up' : 'down'} {comparisonValue} comparado con el mes pasado
             </span>
             {this.props.showHistoryButton ? (
-              <Link to='/figures/mau-history' className={styles['mau-history-link']}>See details</Link>
+              <Link to='/figures/mau-history' className={styles['mau-history-link']}>Ver detalles</Link>
             ) : ''}
           </div>
         </div>
@@ -76,7 +76,7 @@ class HeaderContentMaus extends Component {
                 />
               </AreaChart>
             ) : (
-              <span className={styles['no-data-label']}>Active Users historic data unavailable</span>
+              <span className={styles['no-data-label']}>Historial de usuarios activos no disponible</span>
             )}
           </ResponsiveContainer>
         </div>

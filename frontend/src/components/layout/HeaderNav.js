@@ -13,41 +13,41 @@ class HeaderNav extends Component {
           to="/figures"
           className={styles['header-nav__link']}
         >
-          Overview
+          Resumen
         </NavLink>
         <NavLink
           to="/figures/mau-history"
           className={styles['header-nav__link']}
         >
-          MAU History
+          Historial UAM
         </NavLink>
         <NavLink
           to="/figures/users"
           className={styles['header-nav__link']}
         >
-          Users
+          Usuarios
         </NavLink>
         <NavLink
           to="/figures/courses"
           className={styles['header-nav__link']}
         >
-          Courses
+          Cursos
         </NavLink>
         {(process.env.ENABLE_CSV_REPORTS === "enabled") && (
           <NavLink
             to="/figures/csv-reports"
             className={styles['header-nav__link']}
           >
-            CSV Reports
+            Reportes CSV
           </NavLink>
         )}
         <AutoCompleteCourseSelect
           negativeStyleButton
-          buttonText='Jump to a course'
+          buttonText='Ir a un curso'
         />
         <AutoCompleteUserSelect
           negativeStyleButton
-          buttonText='Select a user'
+          buttonText='Elige un usuario'
         />
       </div>
     );
