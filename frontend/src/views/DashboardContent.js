@@ -52,7 +52,7 @@ class DashboardContent extends Component {
           />
         </div>
         <div className={cx({ 'container': true, 'functionality-callout': true})}>
-          <h3>Acceda r&aacute;pidamente a los datos de un curso espec&iacute;fico utilizando el bot&oacute;n <strong>"Ir a curso"</strong> en la parte superior, o <strong>Navegar cursos</strong> a continuaci&oacute;n:</h3>
+          <h3>Acceda rápidamente a los datos de un curso específico utilizando el botó;n <strong>"Ir a curso"</strong> en la parte superior, o <strong>"Navegar cursos"</strong> a continuación:</h3>
           <NavLink
             to="/figures/courses"
             className={styles['functionality-callout-cta']}

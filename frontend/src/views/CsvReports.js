@@ -178,7 +178,7 @@ class CsvReports extends Component {
           <div className={styles['reports-section']}>
             <div className={styles['reports-filters']}>
               <div className={styles['header-title']}>
-                Reportes CSV generados autom&aacute;ticamente
+                Reportes CSV generados automáticamente
               </div>
               <div className={styles['filters-heading']}>
                 Filtrar reportes
@@ -222,7 +222,7 @@ class CsvReports extends Component {
                 className={cx({ 'report-selector': true, 'active': (this.state.selectedAutoReports === 'csvCourseMetrics')})}
                 onClick={() => this.setSelectedAutoReports('csvCourseMetrics')}
               >
-                Reportes de m&eacute;tricas de curso
+                Reportes de métricas de curso
               </button>
             </div>
             <ul className={styles['reports-list']}>
@@ -231,7 +231,7 @@ class CsvReports extends Component {
                   Nombre del reporte:
                 </div>
                 <div className={styles['report-timestamp']}>
-                  Hora de craci&oacute;n:
+                  Hora de creación:
                 </div>
                 <div className={styles['report-buttons']}>
                 </div>

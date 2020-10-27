@@ -12,7 +12,7 @@ class HeaderContentCsvReports extends Component {
       <section className={cx({ 'header-content-reports-list': true, 'container': true})}>
         <div className={styles['title-container']}>
           <div className={styles['title-text']}>Reportes CSV descargables</div>
-          <div className={styles['subtitle-text']}>Descargar conjuntos de la informaci&oacute;n de tu plataforma en formato CSV.</div>
+          <div className={styles['subtitle-text']}>Descargar conjuntos de la información de tu plataforma en formato CSV.</div>
           <span className={styles['title-decoration']} />
         </div>
       </section>

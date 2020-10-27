@@ -20,7 +20,7 @@ class CustomTooltip extends Component {
       return (
         <div className={styles['bar-tooltip']}>
           <span className={styles['tooltip-value']}>{payload[0].value}</span>
-          <p>active users in {payload[0].payload.period}</p>
+          <p>usuarios activos en {payload[0].payload.period}</p>
         </div>
       );
     }
@@ -54,7 +54,7 @@ class HeaderContentMaus extends Component {
           <div className={styles['comparison-box']}>
             <span className={styles['comparison-box__icon']}>{comparisonIcon}</span>
             <span className={styles['comparison-box__text']}>
-              {(currentPeriodValue >= previousPeriodValue) ? 'up' : 'down'} {comparisonValue} comparado con el mes pasado
+              {(currentPeriodValue >= previousPeriodValue) ? 'subió' : 'bajó'} {comparisonValue} comparado con el mes pasado
             </span>
             {this.props.showHistoryButton ? (
               <Link to='/figures/mau-history' className={styles['mau-history-link']}>Ver detalles</Link>

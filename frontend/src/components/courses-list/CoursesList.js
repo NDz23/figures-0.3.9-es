@@ -92,7 +92,7 @@ class CoursesList extends Component {
 }
 
 CoursesList.defaultProps = {
-  listTitle: 'Informaci&oacute;n del curso:',
+  listTitle: 'Información del curso:',
   CoursesList: []
 }
 

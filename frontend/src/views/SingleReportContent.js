@@ -69,7 +69,7 @@ class SingleReportContent extends Component {
             </div>
             <div className={styles['meta-date']}>
               <span className={styles['meta-heading']}>
-                Fecha de creaci&oacute;n:
+                Fecha de creación:
               </span>
               <span className={styles['meta-content']}>
                 {this.state.dateCreated}

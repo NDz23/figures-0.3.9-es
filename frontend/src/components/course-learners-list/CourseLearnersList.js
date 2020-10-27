@@ -68,7 +68,7 @@ class CourseLearnersList extends Component {
           <ul className={styles['learners-table']}>
             <li key="header" className={styles['header-row']}>
               <span className={styles['name']}>Estudiante</span>
-              <span className={styles['country']}>Pa&iacute;s</span>
+              <span className={styles['country']}>País</span>
               <span className={styles['date-enrolled']}>Fecha enrolado</span>
               <span className={styles['course-progress']}>Progreso del curso</span>
               <span className={styles['course-completed']}>Curso completado</span>
@@ -76,7 +76,7 @@ class CourseLearnersList extends Component {
             </li>
             {learnersRender}
           </ul>
-          {!this.state.allLearnersLoaded && <button className={styles['load-more-button']} onClick={() => this.paginationLoadMore()}>Cargar m&aacute;s</button>}
+          {!this.state.allLearnersLoaded && <button className={styles['load-more-button']} onClick={() => this.paginationLoadMore()}>Cargar más</button>}
         </div>
       </section>
     )
@@ -84,7 +84,7 @@ class CourseLearnersList extends Component {
 }
 
 CourseLearnersList.defaultProps = {
-  listTitle: 'Informaci&oacute;n por estudiante:',
+  listTitle: 'Información por estudiante:',
 }
 
 CourseLearnersList.propTypes = {

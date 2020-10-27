@@ -97,7 +97,7 @@ class SingleCourseContent extends Component {
             dataType='percentage'
           />
           <BaseStatCard
-            cardTitle='Promedio de d&iacute;as para completar'
+            cardTitle='Promedio de días para completar'
             fetchDataKey={'avg_days_to_complete'}
             fetchValueFunction={(dataKey) => courseMonthlyMetrics.getSpecificWithHistory(this.props.courseId, dataKey)}
             fetchHistoryFunction={(dataKey) => courseMonthlyMetrics.getSpecificWithHistory(this.props.courseId, dataKey)}

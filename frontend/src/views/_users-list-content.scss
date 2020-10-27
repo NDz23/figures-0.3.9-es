@@ -1,11 +1,10 @@
-@import '~base/sass/base/variables';
-@import '~base/sass/base/functions';
-@import '~base/sass/base/grid';
-@import '~base/sass/base/mixins';
-@import '~base/sass/base/stat-cards';
+@import "~base/sass/base/variables";
+@import "~base/sass/base/functions";
+@import "~base/sass/base/grid";
+@import "~base/sass/base/mixins";
+@import "~base/sass/base/stat-cards";
 
 .users-content {
-
 }
 
 .users-list {
@@ -37,6 +36,7 @@
     background: none;
     border: none;
     outline: none;
+    color: #222222;
 
     span {
       margin-right: calcRem(5);
@@ -44,7 +44,8 @@
       font-size: calcRem(12);
     }
 
-    &:hover, &:focus {
+    &:hover,
+    &:focus {
       cursor: pointer;
     }
   }
@@ -55,11 +56,13 @@
     text-decoration: none;
   }
 
-  .user-fullname, .username {
-
+  .user-fullname,
+  .username {
   }
 
-  .is-active, .number-of-courses, .date-joined {
+  .is-active,
+  .number-of-courses,
+  .date-joined {
     text-align: center;
 
     @media (max-width: $half-screen-breakpoint) {

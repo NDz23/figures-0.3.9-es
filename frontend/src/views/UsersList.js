@@ -170,7 +170,7 @@ class UsersList extends Component {
         <HeaderAreaLayout>
           <HeaderContentStatic
             title='Lista de usuarios'
-            subtitle={'Aqu&iacute; puedes ver todos los usuarios de tu plataforma. Cantidad de resultados: ' + this.state.count + '.'}
+            subtitle={'Aquí puedes ver todos los usuarios de tu plataforma. Cantidad de resultados: ' + this.state.count + '.'}
           />
         </HeaderAreaLayout>
         <div className={cx({ 'container': true, 'users-content': true})}>

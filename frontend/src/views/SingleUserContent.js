@@ -14,13 +14,13 @@ countries.registerLocale(require("i18n-iso-countries/langs/en.json"));
 
 const educationLevelsDict = {
   "p": "Doctorado",
-  "m": "Master o mag&iacute;ster",
+  "m": "Master o magíster",
   "b": "Pregrado o licenciatura",
-  "a": "T&eacute;cnico profesional",
+  "a": "Técnico profesional",
   "hs": "Enseñanza secundaria",
-  "jhs": "Formaci&oacute;n media",
-  "none": "Ninguna educaci&oacute;n formal",
-  "o": "Otra educaci&oacute;n",
+  "jhs": "Formación media",
+  "none": "Ninguna educación formal",
+  "o": "Otra educación",
   "n-a": "No disponible",
   "el": "Enseñanza primaria"
 }
@@ -84,7 +84,7 @@ class SingleUserContent extends Component {
                 <span className={styles['value']}>{this.state.userData.getIn(['year_of_birth'])}</span>
               </li>
               <li>
-                <span className={styles['label']}>G&eacute;nero:</span>
+                <span className={styles['label']}>Género:</span>
                 <span className={styles['value']}>{genderDict[this.state.userData.getIn(['gender'])]}</span>
               </li>
               <li>
@@ -93,14 +93,14 @@ class SingleUserContent extends Component {
               </li>
               <li>
                 <span className={styles['label']}>Cuenta activada:</span>
-                <span className={styles['value']}>{this.state.userData.getIn(['is_active'], false) ? 'S&iacute;' : 'No'}</span>
+                <span className={styles['value']}>{this.state.userData.getIn(['is_active'], false) ? 'Sí' : 'No'}</span>
               </li>
               <li>
                 <span className={styles['label']}>Cursos enrolados:</span>
                 <span className={styles['value']}>{this.state.userData.getIn(['courses']) ? this.state.userData.getIn(['courses']).length : ""}</span>
               </li>
               <li>
-                <span className={styles['label']}>Pa&iacute;:</span>
+                <span className={styles['label']}>País:</span>
                 <span className={styles['value']}>{this.state.userData.getIn(['country']) ? countries.getName(this.state.userData.getIn(['country']), "en") : "No disponible"}</span>
               </li>
               <li>
@@ -108,7 +108,7 @@ class SingleUserContent extends Component {
                 <span className={styles['value']}>{this.state.userData.getIn(['level_of_education']) ? educationLevelsDict[this.state.userData.getIn(['level_of_education'])] : 'No disponible'}</span>
               </li>
               <li>
-                <span className={styles['label']}>Correo electr&oacute;nico:</span>
+                <span className={styles['label']}>Correo electrónico:</span>
                 <span className={styles['value']}><a href={"mailto:" + this.state.userData.getIn(['email'])}>{this.state.userData.getIn(['email'])}</a></span>
               </li>
             </ul>

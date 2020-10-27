@@ -26,7 +26,7 @@ class CustomTooltip extends Component {
       return (
         <div className={styles['bar-tooltip']}>
           <span className={styles['tooltip-value']}>{payload[0].value}</span>
-          <p>estudiantes actualmente en esta secci&oacute;n</p>
+          <p>estudiantes actualmente en esta sección</p>
         </div>
       );
     }
@@ -61,7 +61,7 @@ class HeaderContentCourse extends Component {
           {displayCourseHeaderGraph ? [
             <span className={styles['text-separator']} />,
             <div className={styles['learners-info']}>
-              <strong>{this.props.learnersEnrolled && this.props.learnersEnrolled['current_month']}</strong> estudiantes enrolados actualmente, progresando a trav&eacute;s de las secciones como se muestra a continuaci&oacute;n:
+              <strong>{this.props.learnersEnrolled && this.props.learnersEnrolled['current_month']}</strong> estudiantes enrolados actualmente, progresando a través de las secciones como se muestra a continuación:
             </div>
           ] : (
             <span className={styles['graph-bottom-padding']} />

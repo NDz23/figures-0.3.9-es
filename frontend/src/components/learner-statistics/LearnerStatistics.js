@@ -20,71 +20,76 @@ class LearnerStatistics extends Component {
       countryStats: List([
         {
           value: "n-a",
-          label: "Not available",
+          label: "No disponible",
           count: 0
         }
       ]),
       genderStats: List([
         {
           value: "m",
-          label: "Male",
+          label: "Masculino",
           count: 0
         },
         {
           value: "f",
-          label: "Female",
+          label: "Femenino",
           count: 0
         },
         {
           value: "o",
-          label: "Other / Prefer not to say",
+          label: "Otro / Prefiere no decir",
           count: 0
         }
       ]),
       educationLevelStats: List([
         {
           value: "p",
-          label: "PhD or Doctorate",
+          label: "Doctorado",
           count: 0
         },
         {
           value: "m",
-          label: "Master's or professional degree",
+          label: "Master o magíster",
           count: 0
         },
         {
           value: "b",
-          label: "Bachelor's degree",
+          label: "Pregrado o licenciatura",
           count: 0
         },
         {
           value: "a",
-          label: "Associate's degree",
+          label: "Técnico profesional",
           count: 0
         },
         {
           value: "hs",
-          label: "Secondary/high school",
+          label: "Enseñanza secundaria",
           count: 0
         },
         {
           value: "jhs",
-          label: "Junior secondary/junior high/middle school",
+          label: "Formación media",
           count: 0
         },
         {
           value: "none",
-          label: "None",
+          label: "Ninguna",
           count: 0
         },
         {
           value: "o",
-          label: "Other",
+          label: "Otro",
           count: 0
         },
         {
           value: "n-a",
-          label: "Not available",
+          label: "No disponible",
+          count: 0
+        },
+        {
+          value: "el",
+          label: "Enseñanza primaria",
           count: 0
         }
       ])
@@ -158,8 +163,8 @@ class LearnerStatistics extends Component {
   render() {
     const dropdownOptions = List([
       { value: 'education', label: 'Por nivel educativo' },
-      { value: 'gender', label: 'Por g&eacute;nero' },
-      { value: 'country', label: 'Por pa&iacute;s' },
+      { value: 'gender', label: 'Por género' },
+      { value: 'country', label: 'Por país' },
     ])
 
     return (
@@ -190,7 +195,7 @@ class LearnerStatistics extends Component {
 }
 
 LearnerStatistics.defaultProps = {
-  listTitle: 'Estad&iacute;sticas de estudiantes:',
+  listTitle: 'Estadísticas de estudiantes:',
   breakdownType: 'country',
 }
 

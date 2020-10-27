@@ -72,10 +72,10 @@ class ReportsList extends Component {
               Nombre del reporte:
             </div>
             <div className={styles['report-description']}>
-              Descripci&oacute;n del reporte:
+              Descripción del reporte:
             </div>
             <div className={styles['report-timestamp']}>
-              Hora de creaci&oacute;n:
+              Hora de creación:
             </div>
             <div className={styles['report-buttons']}>
             </div>

@@ -197,13 +197,13 @@ class CoursesList extends Component {
         <HeaderAreaLayout>
           <HeaderContentStatic
             title='Lista de cursos'
-            subtitle={'Aqu&iacute; puedes ver todos los cursos de tu plataforma. Cantidad de resultados: ' + this.state.count + '.'}
+            subtitle={'Aquí puedes ver todos los cursos de tu plataforma. Cantidad de resultados: ' + this.state.count + '.'}
           />
         </HeaderAreaLayout>
         <div className={cx({ 'container': true, 'courses-content': true})}>
           <ListSearch
             valueChangeFunction={this.setSearchQuery}
-            inputPlaceholder='Buscar curso por nombre, c&oacute;digo o ID...'
+            inputPlaceholder='Buscar curso por nombre, código o ID...'
           />
           {this.state.pages ? (
             <Paginator

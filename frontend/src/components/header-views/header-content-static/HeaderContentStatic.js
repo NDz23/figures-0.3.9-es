@@ -18,8 +18,8 @@ class HeaderContentStatic extends Component {
 }
 
 HeaderContentStatic.defaultProps = {
-  title: 'Encabezado de la p&aacute;gina est&aacute;tica',
-  subtitle: 'Subt&iacute;tulo del encabezado de la p&aacute;gina est&aacute;tica.'
+  title: 'Encabezado de la página estática',
+  subtitle: 'Subtítulo del encabezado de la página estática.'
 }
 
 HeaderContentStatic.propTypes = {
