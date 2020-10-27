@@ -1,4 +1,4 @@
-@import '~base/sass/base/functions';
+@import "~base/sass/base/functions";
 
 $rem-base-size: 10 !default;
 $base-font-size: calcRem(14) !default;
@@ -7,10 +7,10 @@ $mobile-breakpoint: calcRem(420);
 $half-screen-breakpoint: calcRem(639);
 $tablet-breakpoint: calcRem(1020);
 
-$font-family: 'Open Sans', sans-serif;
+$font-family: "Open Sans", sans-serif;
 
-$primary-color: #0090c1 !default;
-$base-text-color: #2C2A2F !default;
+$primary-color: #90323e !default;
+$base-text-color: #2c2a2f !default;
 
 $positive-color: #27ae60;
 $negative-color: #c0392b;
