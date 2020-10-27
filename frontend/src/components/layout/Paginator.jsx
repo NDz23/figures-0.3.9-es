@@ -129,19 +129,19 @@ class Paginator extends React.Component {
               className={styles['text-item']}
               onClick={() => this.props.pageSwitchFunction(this.props.pages)}
             >
-              &Uacute;ltimo
+              Último
             </button>
           ) : (
             <span
               className={styles['text-item-dummy']}
             >
-              &Uacute;ltimo
+              Último
             </span>
           )}
         </div>
         <div className={styles['dropdown-controls-container']}>
           <span className={styles['paginator-dropdown-label']}>
-            Por p&aacute;gina:
+            Por página:
           </span>
           <div className={styles['dropdown-inner-container']}>
             <Select
