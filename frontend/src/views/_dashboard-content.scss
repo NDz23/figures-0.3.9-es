@@ -1,6 +1,6 @@
-@import '~base/sass/base/variables';
-@import '~base/sass/base/functions';
-@import '~base/sass/base/grid';
+@import "~base/sass/base/variables";
+@import "~base/sass/base/functions";
+@import "~base/sass/base/grid";
 
 .dashboard-content {
   margin-top: calcRem(40);
@@ -35,7 +35,7 @@
     text-decoration: none;
 
     &:hover {
-      color: #fff;
+      color: #fff !important;
       background: $primary-color;
     }
   }
